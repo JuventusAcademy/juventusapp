@@ -1,0 +1,10 @@
+project_id = "futgestao"
+
+[functions.asaas-payment]
+verify_jwt = false
+
+[functions.asaas-webhook]
+verify_jwt = false
+
+[functions.invite-member]
+verify_jwt = false
