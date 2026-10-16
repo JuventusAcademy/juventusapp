@@ -31,3 +31,9 @@ export function demoGuardianPhoto(row: Row) {
   return `/demo-guardians/parent-${index % 2 ? "02" : "01"}.jpg`;
 }
 
+export function demoStudentPhoto(row: Row) {
+  const n = [1, 2, 3, 5, 6, 7, 8, 9][
+    Array.from(String(row.id)).reduce((a, c) => a + c.charCodeAt(0), 0) % 8
+  ];
+  return `/demo-students/student-${String(n).padStart(2, "0")}.jpg`;
+}

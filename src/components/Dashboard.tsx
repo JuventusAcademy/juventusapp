@@ -1,3 +1,4 @@
+import { isDemoStudent, demoStudentPhoto } from "../lib/studentDemo";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import {
@@ -462,13 +463,22 @@ export default function Dashboard({
             <div className="recent-list">
               {recent.data.map((r) => (
                 <div key={r.id}>
-                  <span className="avatar">
-                    {String(r.name)
-                      .split(" ")
-                      .slice(0, 2)
-                      .map((v) => v[0])
-                      .join("")}
-                  </span>
+                  {isDemoStudent(r) ? (
+                    <img
+                      className="recent-student-photo"
+                      src={demoStudentPhoto(r)}
+                      alt="Foto fictícia do aluno"
+                      loading="lazy"
+                    />
+                  ) : (
+                    <span className="avatar">
+                      {String(r.name)
+                        .split(" ")
+                        .slice(0, 2)
+                        .map((v) => v[0])
+                        .join("")}
+                    </span>
+                  )}
                   <div>
                     <strong>{r.name}</strong>
                     <small>Matrícula {String(r.registration_code)}</small>

@@ -1,5 +1,6 @@
 import {
   isDemoStudent,
+  demoStudentPhoto,
   demoGuardianName,
   demoGuardianPhoto,
 } from "../lib/studentDemo";
@@ -81,13 +82,11 @@ function StudentPhoto({ row, large = false }: { row: Row; large?: boolean }) {
   const demo =
     String(row.registration_code || "").startsWith("DEMO-") ||
     row.school_id === "preview";
-  const n = [1, 2, 3, 5, 6, 7, 8, 9][
-    Array.from(String(row.id)).reduce((a, c) => a + c.charCodeAt(0), 0) % 8
-  ];
+
   return demo ? (
     <img
       className={"student-photo " + (large ? "large" : "")}
-      src={`/demo-students/student-${String(n).padStart(2, "0")}.jpg`}
+      src={demoStudentPhoto(row)}
       alt="Foto de exemplo"
       loading="lazy"
     />
@@ -715,10 +714,6 @@ export default function Students({
             <option value="created_at">Mais recentes</option>
             <option value="name">Nome A–Z</option>
           </select>
-          <button className="btn secondary" onClick={exportStudents}>
-            <Download size={16} />
-            Exportar
-          </button>
         </div>
       </section>
       <div className="student-grid-meta">
@@ -726,7 +721,10 @@ export default function Students({
           {q.data?.count || 0} alunos{" "}
           {filter && `· ${filter === "active" ? "Ativos" : "Inativos"}`}
         </span>
-        <small>Fotos de exemplo nos cadastros Demo</small>
+        <button className="btn secondary" onClick={exportStudents}>
+          <Download size={16} />
+          Exportar
+        </button>
       </div>
       {context.isError && (
         <div className="notice">
@@ -931,4 +929,3 @@ export default function Students({
     </>
   );
 }
-

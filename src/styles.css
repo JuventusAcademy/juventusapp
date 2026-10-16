@@ -4404,3 +4404,54 @@ html:has(dialog[open]) {
 .agenda-panel {
   align-self: start;
 }
+
+/* A full-card kit texture, with all student information kept above it. */
+.student-card {
+  position: relative;
+  isolation: isolate;
+}
+.student-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: url("/juventus-home-cutout.png") center / cover no-repeat;
+  opacity: 0.055;
+  pointer-events: none;
+  z-index: -1;
+}
+.student-card-body::before {
+  content: none;
+}
+[data-theme="dark"] .student-card::before {
+  opacity: 0.075;
+}
+.student-grid-meta {
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+}
+.student-grid-meta > span {
+  font-size: 13px;
+}
+.student-grid-meta > .btn {
+  font-size: 12px;
+  min-height: 36px;
+  border-radius: 9px;
+  padding: 8px 12px;
+}
+.recent-student-photo {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+@media (max-width: 760px) {
+  .student-grid-meta {
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+  }
+}
