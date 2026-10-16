@@ -305,36 +305,40 @@ export default function App() {
             <X size={20} />
           </button>
         </div>
-        <div className="school-switch">
-          <span className="school-emblem">
-            <Goal size={21} />
-          </span>
-          <div>
-            <strong>{schoolName}</strong>
-            {membership.data && membership.data.length > 1 ? (
-              <select
-                aria-label="Selecionar escola"
-                value={school}
-                onChange={(e) => {
-                  client.removeQueries({
-                    predicate: (q) => q.queryKey[0] !== "memberships",
-                  });
-                  setSchoolChoice(e.target.value);
-                  setPage("dashboard");
-                }}
-              >
-                {membership.data.map((m) => (
-                  <option key={m.school_id} value={m.school_id}>
-                    {m.schools?.name}
-                  </option>
-                ))}
-              </select>
-            ) : (
-              <small>{parent ? "Portal da família" : "Gestão da escola"}</small>
-            )}
+        {membership.data && membership.data.length > 1 && (
+          <div className="school-switch">
+            <span className="school-emblem">
+              <Goal size={21} />
+            </span>
+            <div>
+              <strong>{schoolName}</strong>
+              {membership.data && membership.data.length > 1 ? (
+                <select
+                  aria-label="Selecionar escola"
+                  value={school}
+                  onChange={(e) => {
+                    client.removeQueries({
+                      predicate: (q) => q.queryKey[0] !== "memberships",
+                    });
+                    setSchoolChoice(e.target.value);
+                    setPage("dashboard");
+                  }}
+                >
+                  {membership.data.map((m) => (
+                    <option key={m.school_id} value={m.school_id}>
+                      {m.schools?.name}
+                    </option>
+                  ))}
+                </select>
+              ) : (
+                <small>
+                  {parent ? "Portal da família" : "Gestão da escola"}
+                </small>
+              )}
+            </div>
+            <ChevronDown size={14} />
           </div>
-          <ChevronDown size={14} />
-        </div>
+        )}
         <div className="sidebar-label">
           {parent ? "Sua família" : "Sua escola"}
         </div>
@@ -437,10 +441,14 @@ export default function App() {
             <strong>{title(actualPage)}</strong>
           </div>
           <div className="top-actions">
-            <button className="search-shortcut" onClick={() => setSearch(true)}>
+            <button
+              aria-label="Buscar no aplicativo"
+              className="search-shortcut"
+              onClick={() => setSearch(true)}
+            >
               <Search size={16} />
-              <span>Encontrar módulo</span>
-              <kbd>⌕</kbd>
+              <span>Buscar no aplicativo</span>
+              <kbd>Buscar</kbd>
             </button>
             <button
               className="icon-btn"

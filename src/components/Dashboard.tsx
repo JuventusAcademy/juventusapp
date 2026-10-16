@@ -1,8 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import {
-  AreaChart,
-  Area,
+  Cell,
   XAxis,
   YAxis,
   CartesianGrid,
@@ -41,6 +40,7 @@ export default function Dashboard({
   navigate: (id: string) => void;
 }) {
   const [period, setPeriod] = useState("month");
+  const [chartMonths, setChartMonths] = useState(6);
   const end = today();
   const start =
     period === "year" ? end.slice(0, 4) + "-01-01" : end.slice(0, 7) + "-01";
@@ -132,13 +132,16 @@ export default function Dashboard({
             Agenda de treinos <ArrowUpRight size={20} />
           </button>
         </div>
-        <div className="club-shirt" aria-hidden="true">
-          <div className="shirt-stripes" />
-          <img src="/juventus-academy-logo.jpg" alt="" />
-          <span className="shirt-wordmark">Academy</span>
-          <span className="shirt-city">São Carlos</span>
-          <span className="shirt-season">{today().slice(0, 4)}</span>
-        </div>
+        <figure className="club-kit-photo">
+          <img
+            src="/juventus-home-2025-26.webp"
+            alt="Camisa oficial Juventus Home 2025/26, com listras pretas e brancas"
+            fetchPriority="high"
+          />
+          <figcaption>
+            Home kit 2025/26 <span>Juventus × adidas</span>
+          </figcaption>
+        </figure>
         <div className="club-hero-foot">
           <span>Dentro e fora de campo.</span>
           <span>Temporada {today().slice(0, 4)}</span>
@@ -231,43 +234,34 @@ export default function Dashboard({
           </div>
           {financial ? (
             <>
-              <div className="chart-total">
-                <strong>{currency(d.received)}</strong>
-                <span>
-                  <span className="legend-dot" />
-                  Receita recebida
-                </span>
+              <div className="revenue-summary">
+                <div>
+                  <span>Recebido no período selecionado</span>
+                  <strong>{currency(d.received)}</strong>
+                </div>
+                <div className="chart-range" aria-label="Histórico do gráfico">
+                  {[6, 12].map((months) => (
+                    <button
+                      key={months}
+                      aria-pressed={chartMonths === months}
+                      onClick={() => setChartMonths(months)}
+                    >
+                      {months} meses
+                    </button>
+                  ))}
+                </div>
               </div>
-              <div className="chart">
+              <div className="chart revenue-bars">
                 <ResponsiveContainer width="100%" height="100%">
-                  <AreaChart
-                    data={d.revenue}
-                    margin={{ top: 10, right: 12, left: 0, bottom: 0 }}
+                  <BarChart
+                    data={d.revenue.slice(-chartMonths)}
+                    barSize={chartMonths === 6 ? 34 : 20}
+                    margin={{ top: 20, right: 10, left: 0, bottom: 5 }}
                   >
-                    <defs>
-                      <linearGradient
-                        id="revenueFill"
-                        x1="0"
-                        y1="0"
-                        x2="0"
-                        y2="1"
-                      >
-                        <stop
-                          offset="0%"
-                          stopColor="var(--chart-line)"
-                          stopOpacity={0.22}
-                        />
-                        <stop
-                          offset="100%"
-                          stopColor="var(--chart-line)"
-                          stopOpacity={0}
-                        />
-                      </linearGradient>
-                    </defs>
                     <CartesianGrid
                       vertical={false}
-                      strokeDasharray="3 5"
                       stroke="var(--border)"
+                      strokeDasharray="2 6"
                     />
                     <XAxis
                       dataKey="month"
@@ -277,41 +271,69 @@ export default function Dashboard({
                           { month: "short" },
                         )
                       }
-                      tickLine={false}
                       axisLine={false}
+                      tickLine={false}
+                      tickMargin={14}
                       tick={{ fontSize: 12, fill: "var(--muted)" }}
                     />
                     <YAxis
-                      width={55}
+                      width={62}
                       tickFormatter={(v) =>
                         Number(v) >= 1000
-                          ? Number(v) / 1000 + " mil"
+                          ? (Number(v) / 1000).toLocaleString("pt-BR") + " mil"
                           : String(v)
                       }
-                      tickLine={false}
                       axisLine={false}
+                      tickLine={false}
                       tick={{ fontSize: 11, fill: "var(--muted)" }}
                     />
                     <Tooltip
+                      cursor={{ fill: "var(--subtle)", radius: 6 }}
                       formatter={(v) => currency(v)}
-                      labelFormatter={(v) => String(v)}
+                      labelFormatter={(v) =>
+                        new Date(String(v) + "-15T12:00:00").toLocaleDateString(
+                          "pt-BR",
+                          { month: "long", year: "numeric" },
+                        )
+                      }
                       contentStyle={{
-                        borderRadius: 12,
+                        borderRadius: 8,
                         border: "1px solid var(--border)",
                         background: "var(--panel)",
                         color: "var(--text)",
+                        boxShadow: "0 8px 28px #00000012",
+                        padding: "12px 16px",
                       }}
                     />
-                    <Area
-                      type="monotone"
+                    <Bar
                       dataKey="amount"
                       name="Recebido"
-                      stroke="var(--chart-line)"
-                      strokeWidth={3}
-                      fill="url(#revenueFill)"
-                    />
-                  </AreaChart>
+                      radius={[5, 5, 0, 0]}
+                      maxBarSize={40}
+                    >
+                      {d.revenue.slice(-chartMonths).map((item, i) => (
+                        <Cell
+                          key={item.month}
+                          fill={
+                            i === d.revenue.slice(-chartMonths).length - 1
+                              ? "var(--chart-line)"
+                              : "var(--chart-bar)"
+                          }
+                        />
+                      ))}
+                    </Bar>
+                  </BarChart>
                 </ResponsiveContainer>
+              </div>
+              <div className="revenue-foot">
+                <span>
+                  <i />
+                  Receita mensal
+                </span>
+                <span>
+                  Últimos {chartMonths} meses · Passe sobre as barras para ver
+                  os valores
+                </span>
               </div>
             </>
           ) : (
