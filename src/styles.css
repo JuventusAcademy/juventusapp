@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Barlow:wght@400;450;500;550;600;650;700;750;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&display=swap");
 @import "tailwindcss";
 @theme {
   --font-sans: "Barlow", sans-serif;
@@ -12,11 +13,11 @@
   --accent: #171717;
   --accent-contrast: #ffffff;
   --chart-line: #262626;
-  --bg: #f5f5f5;
+  --bg: #f1f1f1;
   --panel: #fff;
   --text: #171717;
-  --muted: #838383;
-  --border: #ebebeb;
+  --muted: #656565;
+  --border: #dedede;
   --subtle: #fafafa;
   color-scheme: light;
 }
@@ -1496,7 +1497,9 @@ tbody tr:hover {
   font-size: 30px;
   letter-spacing: -0.6px;
 }
-.brand-text { color: var(--text); }
+.brand-text {
+  color: var(--text);
+}
 .performance-link {
   display: flex;
   align-items: center;
@@ -2646,4 +2649,578 @@ tbody tr:hover {
 }
 .onboarding .academy-brand {
   color: var(--text);
+}
+
+/* Juventus Academy: club identity, kit stripes and sporting typography. */
+
+h1,
+.club-hero h2,
+.stat > strong,
+.field-stat > strong,
+.chart-total > strong {
+  font-family: "Barlow Condensed", "Barlow", sans-serif;
+}
+h1 {
+  font-size: 48px;
+  font-weight: 700;
+  letter-spacing: -0.8px;
+}
+.workspace main {
+  padding-top: 34px;
+}
+.page-title {
+  margin-bottom: 26px;
+}
+.page-title p {
+  font-size: 14px;
+}
+.season-label {
+  font-size: 12px;
+  color: var(--text);
+}
+.season-label > span {
+  width: 18px;
+  height: 3px;
+  border-radius: 0;
+  background: var(--text);
+}
+.topbar {
+  height: 66px;
+  background: var(--bg);
+}
+.breadcrumb {
+  font-size: 13px;
+}
+.sidebar {
+  border-right: 1px solid #343434;
+}
+.sidebar nav > button {
+  font-size: 14px;
+  padding: 12px 16px;
+  border-radius: 3px;
+}
+.sidebar nav > button.active {
+  background: #fff;
+  box-shadow: inset 4px 0 #969696;
+}
+.sidebar nav > button > i {
+  width: 8px;
+  height: 8px;
+  border-radius: 0;
+  transform: rotate(45deg);
+}
+.academy-brand {
+  font-family: "Barlow Condensed", sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 0.95;
+}
+.academy-brand > img {
+  width: 52px;
+  height: 52px;
+  border-radius: 0;
+}
+.academy-brand small {
+  font-family: "Barlow", sans-serif;
+  font-size: 11px;
+  line-height: 1.4;
+}
+.school-switch {
+  border-radius: 3px;
+  margin-top: 28px;
+  margin-bottom: 26px;
+}
+.sidebar-note {
+  position: relative;
+  padding-top: 28px;
+}
+.sidebar-note:before {
+  content: "";
+  position: absolute;
+  width: 54px;
+  height: 5px;
+  top: 0;
+  left: 7px;
+  background: repeating-linear-gradient(
+    90deg,
+    white 0 9px,
+    transparent 9px 18px
+  );
+}
+.sidebar-note .note-ball {
+  display: none;
+}
+.sidebar-note strong {
+  font-family: "Barlow Condensed", sans-serif;
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 1.05;
+}
+.club-hero {
+  min-height: 326px;
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  background: #000;
+  color: #fff;
+  border-radius: 6px;
+  padding: 32px 38px 54px;
+  display: flex;
+  align-items: center;
+}
+.club-hero-copy {
+  position: relative;
+  z-index: 2;
+}
+.club-signature {
+  font-size: 14px;
+  font-weight: 650;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+.club-signature > span {
+  border-left: 1px solid #777;
+  padding-left: 15px;
+  font-weight: 400;
+  color: #c6c6c6;
+}
+.club-hero h2 {
+  font-size: clamp(48px, 4.7vw, 76px);
+  font-weight: 700;
+  line-height: 0.95;
+  letter-spacing: -1px;
+  margin: 20px 0 15px;
+}
+.club-hero p {
+  color: #b8b8b8;
+  font-size: 14px;
+}
+.club-hero-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;
+  background: white;
+  color: black;
+  padding: 11px 15px;
+  margin-top: 22px;
+  font-weight: 650;
+  font-size: 14px;
+  border-radius: 2px;
+}
+.club-hero-action:hover {
+  background: #dedede;
+}
+.club-hero-foot {
+  position: absolute;
+  bottom: 0;
+  left: 38px;
+  right: 38px;
+  height: 34px;
+  border-top: 1px solid #ffffff35;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 11px;
+  color: #b8b8b8;
+  z-index: 2;
+}
+.club-shirt {
+  position: absolute;
+  right: 5%;
+  bottom: -42px;
+  width: 320px;
+  height: 365px;
+  background: #fff;
+  color: #000;
+  transform: rotate(9deg);
+  clip-path: polygon(
+    28% 0,
+    39% 5%,
+    61% 5%,
+    72% 0,
+    100% 20%,
+    86% 36%,
+    77% 31%,
+    80% 100%,
+    20% 100%,
+    23% 31%,
+    14% 36%,
+    0 20%
+  );
+}
+.shirt-stripes {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(90deg, #fff 0 46px, #000 46px 92px);
+}
+.club-shirt:after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    100deg,
+    transparent 20%,
+    #ffffff25 40%,
+    #00000028 85%
+  );
+  pointer-events: none;
+}
+.club-shirt > img {
+  position: absolute;
+  width: 48px;
+  height: 48px;
+  top: 55px;
+  right: 78px;
+  background: white;
+  border: 5px solid white;
+  z-index: 1;
+}
+.shirt-wordmark {
+  position: absolute;
+  top: 125px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #fff;
+  padding: 2px 10px 7px;
+  font-family: "Barlow Condensed", sans-serif;
+  font-size: 52px;
+  font-weight: 700;
+  line-height: 1;
+  z-index: 1;
+}
+.shirt-city {
+  position: absolute;
+  top: 188px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 13px;
+  padding: 3px 10px;
+  background: #fff;
+  white-space: nowrap;
+  z-index: 1;
+}
+.shirt-season {
+  position: absolute;
+  top: 228px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: "Barlow Condensed", sans-serif;
+  font-size: 64px;
+  background: #000;
+  color: white;
+  padding: 0 8px;
+  font-weight: 600;
+  line-height: 1;
+}
+.club-shortcuts {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 28px;
+}
+.club-shortcuts button {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 17px 18px;
+  font-size: 13px;
+  font-weight: 600;
+  text-align: left;
+}
+.club-shortcuts button + button {
+  border-left: 1px solid var(--border);
+}
+.club-shortcuts button span {
+  flex: 1;
+}
+.club-shortcuts button:hover {
+  background: var(--panel);
+}
+.stats {
+  gap: 0;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  margin-bottom: 28px;
+  overflow: hidden;
+}
+.stat {
+  border: 0;
+  border-radius: 0;
+  padding: 23px 22px;
+  background: transparent;
+}
+.stat + .stat {
+  border-left: 1px solid var(--border);
+}
+.stat-icon.neutral {
+  background: transparent;
+  width: 24px;
+  height: 24px;
+  align-self: start;
+  opacity: 0.65;
+}
+.stat-label {
+  font-size: 13px;
+  color: var(--text);
+}
+.stat > strong {
+  font-size: clamp(30px, 2.8vw, 43px);
+  font-weight: 600;
+  letter-spacing: -0.6px;
+}
+.stat > small {
+  font-size: 11px;
+  border: 0;
+  padding: 0;
+  margin-top: 11px;
+}
+.panel {
+  border-radius: 6px;
+}
+.panel-head h2 {
+  font-size: 19px;
+  font-weight: 650;
+}
+.panel-head p {
+  font-size: 12px;
+}
+.chart-total > strong {
+  font-size: 40px;
+  font-weight: 600;
+}
+.session-list {
+  padding: 0 23px;
+}
+.session {
+  padding: 19px 0;
+}
+.session h3 {
+  font-size: 15px;
+}
+.session-time,
+.session-time.accent {
+  border-radius: 3px;
+  background: var(--text);
+  color: var(--panel);
+  border: 0;
+  min-width: 58px;
+}
+.session-time strong {
+  font-family: "Barlow Condensed", sans-serif;
+  font-size: 24px;
+}
+.session-time small {
+  color: inherit;
+  opacity: 0.7;
+}
+.panel-link {
+  padding: 16px 23px;
+  font-size: 13px;
+  background: var(--subtle);
+}
+.avatar {
+  border-radius: 4px;
+}
+.btn {
+  border-radius: 3px;
+  box-shadow: none;
+}
+input,
+select,
+textarea {
+  border-radius: 4px;
+}
+.table-toolbar {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+thead {
+  background: var(--subtle);
+}
+th {
+  font-size: 12px;
+  font-weight: 650;
+}
+td {
+  font-size: 14px;
+}
+.auth-story {
+  background: #000;
+  overflow: hidden;
+  isolation: isolate;
+}
+.auth-story:after {
+  content: "";
+  position: absolute;
+  right: -40px;
+  top: 0;
+  bottom: 0;
+  width: 32%;
+  background: repeating-linear-gradient(90deg, #fff 0 42px, #000 42px 84px);
+  transform: skewX(-12deg);
+  opacity: 0.13;
+  z-index: -1;
+}
+.auth-story h1 {
+  font-family: "Barlow Condensed", sans-serif;
+  font-size: clamp(48px, 5.5vw, 86px);
+  line-height: 0.95;
+  font-weight: 700;
+}
+.auth-form h2 {
+  font-family: "Barlow Condensed", sans-serif;
+  font-size: 42px;
+  line-height: 1;
+}
+.auth-lines {
+  display: none;
+}
+[data-theme="dark"] .session-time.accent {
+  background: var(--text);
+  color: var(--panel);
+}
+@media (min-width: 761px) and (max-width: 1100px) {
+  .club-shirt {
+    right: -35px;
+    opacity: 0.55;
+    width: 285px;
+  }
+  .club-hero-copy {
+    max-width: 70%;
+  }
+  .club-hero h2 {
+    font-size: 58px;
+  }
+  .stat {
+    padding: 20px 14px;
+  }
+  .stat-icon {
+    display: none;
+  }
+}
+@media (max-width: 760px) {
+  h1,
+  .page-title h1 {
+    font-size: 38px;
+  }
+  .page-title p {
+    font-size: 13px;
+    max-width: 210px;
+  }
+  .page-title > select {
+    min-width: 100px;
+  }
+  .club-hero {
+    min-height: 290px;
+    padding: 25px 23px 50px;
+  }
+  .club-signature {
+    font-size: 12px;
+    gap: 9px;
+  }
+  .club-signature > span {
+    padding-left: 9px;
+  }
+  .club-hero h2 {
+    font-size: 46px;
+    margin-top: 25px;
+  }
+  .club-hero p {
+    font-size: 12px;
+    max-width: 170px;
+  }
+  .club-shirt {
+    right: -105px;
+    bottom: -18px;
+    width: 240px;
+    height: 280px;
+    opacity: 0.4;
+    transform: rotate(12deg);
+  }
+  .shirt-wordmark {
+    font-size: 35px;
+    top: 115px;
+  }
+  .shirt-city {
+    top: 160px;
+  }
+  .shirt-season {
+    top: 198px;
+    font-size: 48px;
+  }
+  .club-shirt > img {
+    right: 56px;
+    top: 50px;
+    width: 38px;
+    height: 38px;
+  }
+  .club-hero-foot {
+    left: 23px;
+    right: 23px;
+    font-size: 10px;
+  }
+  .club-hero-action {
+    position: relative;
+    font-size: 13px;
+    gap: 20px;
+  }
+  .club-shortcuts {
+    margin-bottom: 20px;
+  }
+  .club-shortcuts button {
+    flex-wrap: wrap;
+    gap: 7px;
+    padding: 14px 8px;
+    font-size: 11px;
+  }
+  .club-shortcuts button span {
+    flex-basis: 100%;
+    order: 2;
+  }
+  .club-shortcuts button > svg:last-child {
+    margin-left: auto;
+    width: 14px;
+  }
+  .stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .stat {
+    padding: 18px 15px;
+  }
+  .stat:nth-child(3) {
+    border-left: 0;
+  }
+  .stat:nth-child(n + 3) {
+    border-top: 1px solid var(--border);
+  }
+  .stat > strong {
+    font-size: 34px;
+  }
+  .stat-label {
+    font-size: 12px;
+  }
+  .stat-icon {
+    display: none;
+  }
+  .panel-head {
+    padding: 20px 18px 15px;
+  }
+  .session-list {
+    padding: 0 18px;
+  }
+  .topbar {
+    background: var(--panel);
+  }
+  .auth-story:after {
+    width: 25%;
+  }
+}
+
+.auth-form > p,
+.auth-help p,
+.auth-form footer {
+  color: var(--muted);
 }

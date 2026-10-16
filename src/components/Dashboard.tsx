@@ -22,7 +22,6 @@ import {
   UserPlus,
   Activity,
   TrendingUp,
-  Goal,
 } from "lucide-react";
 import { db, friendlyError } from "../lib/supabase";
 import type { Row, Role } from "../domain";
@@ -104,7 +103,7 @@ export default function Dashboard({
             Temporada {today().slice(0, 4)}
           </div>
           <h1>Visão geral</h1>
-          <p>Seu time evolui. Sua gestão acompanha.</p>
+          <p>O dia a dia da sua Academy, em um só lugar.</p>
         </div>
         <select
           aria-label="Período dos indicadores"
@@ -115,33 +114,52 @@ export default function Dashboard({
           <option value="year">Este ano</option>
         </select>
       </div>
-      <div className="welcome">
-        <div>
-          <div className="welcome-tag">
-            <Goal size={17} />O jogo começa com uma boa gestão
-          </div>
+      <section className="club-hero" aria-label="Juventus Academy São Carlos">
+        <div className="club-hero-copy">
+          <span className="club-signature">
+            Juventus Academy <span>São Carlos</span>
+          </span>
           <h2>
-            Mais tempo para formar atletas.
+            O futuro
             <br />
-            Mais clareza para cuidar da escola.
+            entra em campo.
           </h2>
-          <p>Acompanhe as famílias, os treinos e os próximos passos.</p>
-          <button onClick={() => navigate("training")}>
-            Ver agenda de treinos <ArrowUpRight size={17} />
+          <p>Uma escola. Muitas histórias para formar.</p>
+          <button
+            className="club-hero-action"
+            onClick={() => navigate("training")}
+          >
+            Agenda de treinos <ArrowUpRight size={20} />
           </button>
         </div>
-        <div className="pitch" aria-hidden="true">
-          <div className="pitch-mid" />
-          <div className="pitch-center" />
-          <div className="pitch-area left" />
-          <div className="pitch-area right" />
-          <span className="player p1" />
-          <span className="player p2" />
-          <span className="player p3" />
-          <span className="player p4" />
-          <span className="player p5" />
-          <span className="ball" />
+        <div className="club-shirt" aria-hidden="true">
+          <div className="shirt-stripes" />
+          <img src="/juventus-academy-logo.jpg" alt="" />
+          <span className="shirt-wordmark">Academy</span>
+          <span className="shirt-city">São Carlos</span>
+          <span className="shirt-season">{today().slice(0, 4)}</span>
         </div>
+        <div className="club-hero-foot">
+          <span>Dentro e fora de campo.</span>
+          <span>Temporada {today().slice(0, 4)}</span>
+        </div>
+      </section>
+      <div className="club-shortcuts" aria-label="Acesso rápido">
+        <button onClick={() => navigate("students")}>
+          <Users size={18} />
+          <span>Elenco da escola</span>
+          <ArrowUpRight size={17} />
+        </button>
+        <button onClick={() => navigate("attendance")}>
+          <Activity size={18} />
+          <span>Fazer chamada</span>
+          <ArrowUpRight size={17} />
+        </button>
+        <button onClick={() => navigate(financial ? "finance" : "teams")}>
+          <CalendarDays size={18} />
+          <span>{financial ? "Ver mensalidades" : "Minhas turmas"}</span>
+          <ArrowUpRight size={17} />
+        </button>
       </div>
       <div className="stats">
         <Stat

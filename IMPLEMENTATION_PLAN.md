@@ -39,3 +39,9 @@ URL e chave pública Supabase, migrations aplicadas, primeiro administrador prov
 
 ## Revisão visual — identidade Juventus
 Paleta atual: preto #000000, branco #ffffff, grafite #171717, cinza #737373 e fundo #f5f5f5. Sidebar e área de acesso pretas, seleção branca, ações de alto contraste e gráficos monocromáticos. Tipografia Barlow e estrutura mantidas; tons de estado usados apenas para informação operacional. Revisão: sem azul ou laranja como cores de marca; o campo de futebol e a logo oficial continuam como elementos próprios da escola.
+
+
+## Redesign da Academy
+Direção: identidade esportiva da Juventus com camisa listrada desenhada em CSS, sem fotografia genérica. Paleta: preto #000000, branco #ffffff, grafite #171717, fundo #f1f1f1, borda #dedede e texto secundário #656565. Barlow Condensed para títulos e números; Barlow para leitura e controles.
+Composição: título à esquerda, peça principal com texto à esquerda e camisa à direita, atalhos operacionais, faixa integrada de indicadores e agenda ao lado do gráfico. No celular, a camisa permanece secundária e os indicadores ficam em duas colunas.
+Crítica: substituído o campo decorativo com pontos por um elemento ligado à identidade do clube; removida a repetição de quatro cartões isolados. Tabelas, formulários e navegação recebem cantos discretos e texto de maior contraste. Movimento restrito às interações existentes.
