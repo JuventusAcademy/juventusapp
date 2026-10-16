@@ -164,6 +164,19 @@ export default function App() {
     const timer = setTimeout(() => setToast(""), 5000);
     return () => clearTimeout(timer);
   }, [toast]);
+  const profile = useQuery({
+    queryKey: ["my-profile", session?.user.id],
+    enabled: !!session && !preview,
+    queryFn: async () => {
+      const { data, error } = await db()
+        .from("profiles")
+        .select("full_name")
+        .eq("id", session!.user.id)
+        .maybeSingle();
+      if (error) throw error;
+      return data;
+    },
+  });
   const membership = useQuery({
     queryKey: ["memberships", session?.user.id],
     enabled: !!session && !preview,
@@ -293,6 +306,7 @@ export default function App() {
     : mainNav.filter(canAccess);
   const module = modules.find((m) => m.id === actualPage);
   const name =
+    profile.data?.full_name ||
     session?.user.user_metadata?.full_name ||
     session?.user.email?.split("@")[0] ||
     (preview ? "Equipe da escola" : "Minha conta");
@@ -471,20 +485,16 @@ export default function App() {
             >
               <Menu size={22} />
             </button>
-            <span>{parent ? "Portal da família" : "Painel da escola"}</span>
-            <span>/</span>
-            <strong>{title(actualPage)}</strong>
+            <span className="header-greeting">
+              {new Date().getHours() < 12
+                ? "Bom dia"
+                : new Date().getHours() < 18
+                  ? "Boa tarde"
+                  : "Boa noite"}
+              , <strong>{String(name).split(" ")[0]}</strong>
+            </span>
           </div>
           <div className="top-actions">
-            <button
-              aria-label="Buscar no aplicativo"
-              className="search-shortcut"
-              onClick={() => setSearch(true)}
-            >
-              <Search size={16} />
-              <span>Buscar no aplicativo</span>
-              <kbd>Buscar</kbd>
-            </button>
             <button
               className="icon-btn"
               aria-label={dark ? "Ativar modo claro" : "Ativar modo escuro"}

@@ -37,6 +37,8 @@ export default function StudentDetail({
   role,
   notify,
   onClose,
+  embedded = false,
+  initialTab = "Ficha",
 }: {
   row: Row;
   school: string;
@@ -44,8 +46,10 @@ export default function StudentDetail({
   role: Role;
   notify: (s: string) => void;
   onClose: () => void;
+  embedded?: boolean;
+  initialTab?: string;
 }) {
-  const [tab, setTab] = useState("Ficha");
+  const [tab, setTab] = useState(initialTab);
   const client = useQueryClient();
   const q = useQuery({
     queryKey: ["student-detail", school, row.id, tab],
@@ -142,7 +146,7 @@ export default function StudentDetail({
     }
   }
   return (
-    <Modal title={String(row.name)} onClose={onClose} wide>
+    <DetailFrame title={String(row.name)} onClose={onClose} embedded={embedded}>
       <div className="student-summary">
         <span className="avatar large">
           {String(row.name)
@@ -288,6 +292,32 @@ export default function StudentDetail({
           )}
         </>
       )}
+    </DetailFrame>
+  );
+}
+
+function DetailFrame({
+  title,
+  onClose,
+  embedded,
+  children,
+}: {
+  title: string;
+  onClose: () => void;
+  embedded: boolean;
+  children: React.ReactNode;
+}) {
+  return embedded ? (
+    <section className="panel student-full-detail">
+      <div className="profile-section-heading">
+        <h2>Ficha do atleta</h2>
+        <span>Informações e histórico</span>
+      </div>
+      {children}
+    </section>
+  ) : (
+    <Modal title={title} onClose={onClose} wide>
+      {children}
     </Modal>
   );
 }

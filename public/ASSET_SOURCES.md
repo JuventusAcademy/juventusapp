@@ -5,3 +5,5 @@
 - Obtida em 16/10/2026. Foto do produto preservada, sem alterações de marca.
 
 - Versão recortada: fundo removido com ferramenta de edição de imagem para composição sobre preto.
+
+- Retratos temporários de exemplo: https://preskool.dreamstechnologies.com/html/student-details.html (assets/img/students). Exibidos somente nos alunos Demo; não representam os alunos cadastrados.

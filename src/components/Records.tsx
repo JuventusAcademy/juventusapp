@@ -32,6 +32,7 @@ import {
 import { Loading, Empty, ErrorState, Badge, Modal } from "./ui";
 import RecordForm from "./RecordForm";
 import StudentDetail from "./StudentDetail";
+import Students from "./Students";
 import Payment from "./Payment";
 import { previewRows } from "../preview";
 export function cell(row: Row, key: string, refs: Record<string, Row[]> = {}) {
@@ -59,7 +60,7 @@ export function cell(row: Row, key: string, refs: Record<string, Row[]> = {}) {
     return refs[key]?.find((r) => r.id === value)?.name || "—";
   return String(value ?? "—");
 }
-export default function Records({
+function GenericRecords({
   module,
   school,
   role,
@@ -438,5 +439,15 @@ export default function Records({
         </Modal>
       )}
     </>
+  );
+}
+
+export default function Records(
+  props: React.ComponentProps<typeof GenericRecords>,
+) {
+  return props.module.id === "students" ? (
+    <Students {...props} />
+  ) : (
+    <GenericRecords {...props} />
   );
 }
