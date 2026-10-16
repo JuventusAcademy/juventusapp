@@ -2,7 +2,6 @@ import { useEffect, useState, lazy, Suspense } from "react";
 import type { Session } from "@supabase/supabase-js";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import {
-  LayoutDashboard,
   Users,
   Contact,
   Goal,
@@ -53,7 +52,7 @@ type Membership = {
   schools: { name: string } | null;
 };
 const icons: Record<string, LucideIcon> = {
-  dashboard: LayoutDashboard,
+  dashboard: Home,
   students: Users,
   guardians: Contact,
   coaches: GraduationCap,

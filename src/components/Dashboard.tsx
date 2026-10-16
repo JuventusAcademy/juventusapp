@@ -79,6 +79,8 @@ export default function Dashboard({
       return (data as Stats).revenue.slice(-chartMonths);
     },
   });
+  const hasPreviousReceipts =
+    previous.data?.some((row) => Number(row.amount) > 0) ?? false;
   const sessions = useQuery({
     queryKey: ["upcoming", school, preview],
     queryFn: async () => {
@@ -269,6 +271,12 @@ export default function Dashboard({
                   <small>Não foi possível carregar a comparação.</small>
                 )}
               </div>
+              {compare && previous.isSuccess && !hasPreviousReceipts && (
+                <p className="comparison-empty">
+                  Sem receitas no período anterior. A linha de comparação
+                  aparecerá quando houver valores registrados.
+                </p>
+              )}
               <div className="chart revenue-bars">
                 <ResponsiveContainer width="100%" height="100%">
                   <ComposedChart
@@ -309,6 +317,8 @@ export default function Dashboard({
                       tick={{ fontSize: 11, fill: "var(--muted)" }}
                     />
                     <Tooltip
+                      position={{ y: 0 }}
+                      itemSorter={(item) => (item.dataKey === "amount" ? 0 : 1)}
                       cursor={{ fill: "var(--subtle)", radius: 6 }}
                       formatter={(v) => currency(v)}
                       labelFormatter={(v) =>
@@ -345,7 +355,7 @@ export default function Dashboard({
                       radius={[7, 7, 0, 0]}
                       maxBarSize={48}
                     />
-                    {compare && (
+                    {compare && hasPreviousReceipts && (
                       <Line
                         dataKey="previous"
                         name="Período anterior"
