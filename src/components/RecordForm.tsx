@@ -57,6 +57,11 @@ export default function RecordForm({
           shape[f.key] = f.required
             ? z.email("Informe um e-mail válido.")
             : z.union([z.email("Informe um e-mail válido."), z.literal("")]);
+        else if (f.key === "cpf")
+          shape[f.key] = s.regex(
+            /^$|^\d{11}$/,
+            "Informe 11 números, sem pontos ou traços.",
+          );
         else
           shape[f.key] = s.max(
             f.type === "textarea" ? 10000 : 500,
@@ -92,6 +97,16 @@ export default function RecordForm({
           path: ["competence"],
           message: "Use o primeiro dia do mês.",
         });
+      if (
+        v.min_age !== null &&
+        v.max_age !== null &&
+        Number(v.max_age) < Number(v.min_age)
+      )
+        ctx.addIssue({
+          code: "custom",
+          path: ["max_age"],
+          message: "A idade máxima deve ser igual ou maior que a mínima.",
+        });
     });
   }, [module]);
   const defaults = Object.fromEntries(
@@ -103,23 +118,37 @@ export default function RecordForm({
           : f.type === "select"
             ? f.options?.[0]?.value || ""
             : f.type === "date"
-              ? today()
+              ? f.key === "competence"
+                ? today().slice(0, 7) + "-01"
+                : f.key === "birth_date" || !f.required
+                  ? ""
+                  : today()
               : f.type === "number"
-                ? f.key === "capacity"
-                  ? 20
-                  : f.key === "interval_months"
-                    ? 1
-                    : f.key === "due_day"
-                      ? 10
-                      : f.key === "max_score"
+                ? !f.required
+                  ? ""
+                  : f.key === "capacity"
+                    ? 20
+                    : f.key === "interval_months"
+                      ? 1
+                      : f.key === "due_day"
                         ? 10
-                        : 0
+                        : f.key === "max_score"
+                          ? 10
+                          : 0
                 : "");
       if (f.type === "datetime-local" && value) {
         const date = new Date(String(value));
-        value = new Date(date.getTime() - date.getTimezoneOffset() * 60000)
-          .toISOString()
-          .slice(0, 16);
+        value = new Intl.DateTimeFormat("sv-SE", {
+          timeZone: "America/Sao_Paulo",
+          year: "numeric",
+          month: "2-digit",
+          day: "2-digit",
+          hour: "2-digit",
+          minute: "2-digit",
+          hourCycle: "h23",
+        })
+          .format(date)
+          .replace(" ", "T");
       }
       return [f.key, value];
     }),
@@ -141,7 +170,7 @@ export default function RecordForm({
           values[f.key] === ""
             ? null
             : f.type === "datetime-local"
-              ? new Date(String(values[f.key])).toISOString()
+              ? new Date(String(values[f.key]) + ":00-03:00").toISOString()
               : values[f.key],
         ]),
       );

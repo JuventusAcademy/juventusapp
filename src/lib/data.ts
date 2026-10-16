@@ -1,5 +1,5 @@
 import { db } from "./supabase";
-import { pageRange } from "../domain";
+import { pageRange, today } from "../domain";
 import type { Row } from "../domain";
 import type { Module } from "../modules";
 export async function listRows(
@@ -29,12 +29,11 @@ export async function listRows(
     );
   if (["pending", "paid", "overdue"].includes(filter)) {
     if (filter === "overdue")
-      q = q.in("status", ["pending", "processing", "overdue"]).lt(
-        "due_date",
-        new Date().toLocaleDateString("en-CA", {
-          timeZone: "America/Sao_Paulo",
-        }),
-      );
+      q = q
+        .in("status", ["pending", "processing", "overdue"])
+        .lt("due_date", today());
+    else if (filter === "pending")
+      q = q.in("status", ["pending", "processing"]).gte("due_date", today());
     else q = q.eq("status", filter);
   }
   const range = pageRange(page);
