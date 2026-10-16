@@ -2,6 +2,10 @@
 
 Aplicação React + TypeScript + Vite para operação de escola de futebol. Interface em português, valores BRL e datas em America/Sao_Paulo. Visual desenvolvido com a skill frontend-design; logo obtida do perfil oficial indicado pelo usuário.
 
+**Aplicativo:** [juventusapp.vercel.app](https://juventusapp.vercel.app) · **Conta Vercel:** `smartcellsanca-9579/juventusapp` · **Código:** [JuventusAcademy/juventusapp](https://github.com/JuventusAcademy/juventusapp).
+
+O primeiro administrador já foi provisionado, criou a própria senha e realizou o login. A unidade São Carlos foi cadastrada e sua persistência foi verificada. Nenhum aluno fictício foi cadastrado na operação real.
+
 ## Executar
 
 Node.js 22.12+ e npm.
@@ -69,6 +73,10 @@ Unidades → Categorias → Professores → Turmas → Alunos → Responsáveis 
 ## Vercel e GitHub
 
 Repositório informado: [JuventusAcademy/juventusapp](https://github.com/JuventusAcademy/juventusapp).
+
+O código já foi enviado à branch `main`; a publicação foi feita por CLI no time correto `smartcellsanca-9579`. Os dois valores públicos do Supabase já estão configurados nos ambientes Production e Preview da Vercel. Para atualizar manualmente, use `npx vercel deploy --prod --scope smartcellsanca-9579` na pasta vinculada.
+
+O vínculo nativo de deploy automático por GitHub ainda depende de adicionar uma **GitHub Login Connection** à conta Vercel correta. A Vercel recusou a conexão automática por essa dependência; isso não impede o aplicativo publicado nem a atualização por CLI. Depois de conectar a conta no painel Vercel, execute `npx vercel git connect https://github.com/JuventusAcademy/juventusapp --scope smartcellsanca-9579`.
 
 Importe o repositório na Vercel como Vite; raiz do projeto `/`; build `npm run build`; diretório `dist`. Adicione nas variáveis de Production/Preview:
 
