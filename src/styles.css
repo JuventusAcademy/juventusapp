@@ -3075,6 +3075,30 @@ td {
   font-size: 42px;
   line-height: 1;
 }
+@media (max-width: 760px) {
+  .auth-layout {
+    grid-template-rows: auto 1fr;
+  }
+  .auth-story {
+    min-height: 0;
+    padding: 18px 26px;
+  }
+  .auth-story > div:nth-child(2) {
+    padding-top: 16px;
+  }
+  .auth-story h1 {
+    font-size: 34px;
+  }
+  .auth-form-side {
+    padding: 24px 26px;
+  }
+  .auth-form h2 {
+    font-size: 34px;
+  }
+  .auth-form > p {
+    margin-bottom: 18px;
+  }
+}
 .auth-lines {
   display: none;
 }

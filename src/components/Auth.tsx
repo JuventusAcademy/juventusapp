@@ -190,16 +190,11 @@ export default function Auth({
               </button>
             </form>
           )}
-          <div className="auth-help">
-            <strong>Ainda não tem acesso?</strong>
-            <p>Peça um convite à administração da sua escola.</p>
-          </div>
           {onPreview && (
             <button className="text-btn" onClick={onPreview}>
               Abrir prévia de design local <ArrowUpRight size={16} />
             </button>
           )}
-          <footer>FutGestão · Feito para quem forma atletas.</footer>
         </div>
       </section>
     </div>
