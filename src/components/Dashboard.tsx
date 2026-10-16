@@ -1,7 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import {
-  Cell,
+  ComposedChart,
+  Line,
   XAxis,
   YAxis,
   CartesianGrid,
@@ -41,6 +42,7 @@ export default function Dashboard({
 }) {
   const [period, setPeriod] = useState("month");
   const [chartMonths, setChartMonths] = useState(6);
+  const [compare, setCompare] = useState(true);
   const end = today();
   const start =
     period === "year" ? end.slice(0, 4) + "-01-01" : end.slice(0, 7) + "-01";
@@ -55,6 +57,26 @@ export default function Dashboard({
       });
       if (error) throw error;
       return data as Stats;
+    },
+  });
+  const previousEnd = new Date(
+    Number(end.slice(0, 4)),
+    Number(end.slice(5, 7)) - chartMonths,
+    0,
+    12,
+  ).toLocaleDateString("en-CA");
+  const previous = useQuery({
+    queryKey: ["revenue-previous", school, previousEnd, preview],
+    enabled: compare && role !== "coach",
+    queryFn: async () => {
+      if (preview) return [] as { month: string; amount: number }[];
+      const { data, error } = await db().rpc("dashboard", {
+        sid: school,
+        from_date: previousEnd.slice(0, 7) + "-01",
+        to_date: previousEnd,
+      });
+      if (error) throw error;
+      return (data as Stats).revenue.slice(-chartMonths);
     },
   });
   const sessions = useQuery({
@@ -134,7 +156,7 @@ export default function Dashboard({
         </div>
         <figure className="club-kit-photo">
           <img
-            src="/juventus-home-2025-26.webp"
+            src="/juventus-home-cutout.png"
             alt="Camisa oficial Juventus Home 2025/26, com listras pretas e brancas"
             fetchPriority="high"
           />
@@ -147,23 +169,6 @@ export default function Dashboard({
           <span>Temporada {today().slice(0, 4)}</span>
         </div>
       </section>
-      <div className="club-shortcuts" aria-label="Acesso rápido">
-        <button onClick={() => navigate("students")}>
-          <Users size={18} />
-          <span>Elenco da escola</span>
-          <ArrowUpRight size={17} />
-        </button>
-        <button onClick={() => navigate("attendance")}>
-          <Activity size={18} />
-          <span>Fazer chamada</span>
-          <ArrowUpRight size={17} />
-        </button>
-        <button onClick={() => navigate(financial ? "finance" : "teams")}>
-          <CalendarDays size={18} />
-          <span>{financial ? "Ver mensalidades" : "Minhas turmas"}</span>
-          <ArrowUpRight size={17} />
-        </button>
-      </div>
       <div className="stats">
         <Stat
           icon={<Users size={21} />}
@@ -251,17 +256,33 @@ export default function Dashboard({
                   ))}
                 </div>
               </div>
+              <div className="chart-compare">
+                <label>
+                  <input
+                    type="checkbox"
+                    checked={compare}
+                    onChange={(e) => setCompare(e.target.checked)}
+                  />
+                  Comparar período anterior
+                </label>
+                {previous.isError && compare && (
+                  <small>Não foi possível carregar a comparação.</small>
+                )}
+              </div>
               <div className="chart revenue-bars">
                 <ResponsiveContainer width="100%" height="100%">
-                  <BarChart
-                    data={d.revenue.slice(-chartMonths)}
-                    barSize={chartMonths === 6 ? 34 : 20}
+                  <ComposedChart
+                    data={d.revenue.slice(-chartMonths).map((item, i) => ({
+                      ...item,
+                      previous: previous.data?.[i]?.amount,
+                    }))}
+                    barSize={chartMonths === 6 ? 44 : 26}
                     margin={{ top: 20, right: 10, left: 0, bottom: 5 }}
                   >
                     <CartesianGrid
                       vertical={false}
                       stroke="var(--border)"
-                      strokeDasharray="2 6"
+                      strokeDasharray="0"
                     />
                     <XAxis
                       dataKey="month"
@@ -305,35 +326,51 @@ export default function Dashboard({
                         padding: "12px 16px",
                       }}
                     />
+                    <defs>
+                      <linearGradient
+                        id="blackBars"
+                        x1="0"
+                        y1="0"
+                        x2="0"
+                        y2="1"
+                      >
+                        <stop offset="0%" stopColor="var(--bar-top)" />
+                        <stop offset="100%" stopColor="var(--bar-bottom)" />
+                      </linearGradient>
+                    </defs>
                     <Bar
                       dataKey="amount"
-                      name="Recebido"
-                      radius={[5, 5, 0, 0]}
-                      maxBarSize={40}
-                    >
-                      {d.revenue.slice(-chartMonths).map((item, i) => (
-                        <Cell
-                          key={item.month}
-                          fill={
-                            i === d.revenue.slice(-chartMonths).length - 1
-                              ? "var(--chart-line)"
-                              : "var(--chart-bar)"
-                          }
-                        />
-                      ))}
-                    </Bar>
-                  </BarChart>
+                      name="Período selecionado"
+                      fill="url(#blackBars)"
+                      radius={[7, 7, 0, 0]}
+                      maxBarSize={48}
+                    />
+                    {compare && (
+                      <Line
+                        dataKey="previous"
+                        name="Período anterior"
+                        type="monotone"
+                        stroke="var(--comparison-line)"
+                        strokeWidth={2.5}
+                        dot={{ r: 4, fill: "var(--panel)", strokeWidth: 2 }}
+                        activeDot={{ r: 6 }}
+                        connectNulls={false}
+                      />
+                    )}
+                  </ComposedChart>
                 </ResponsiveContainer>
               </div>
-              <div className="revenue-foot">
+              <div className="revenue-foot chart-legend">
                 <span>
                   <i />
-                  Receita mensal
+                  Período selecionado
                 </span>
-                <span>
-                  Últimos {chartMonths} meses · Passe sobre as barras para ver
-                  os valores
-                </span>
+                {compare && (
+                  <span>
+                    <i className="comparison-key" />
+                    Período anterior
+                  </span>
+                )}
               </div>
             </>
           ) : (

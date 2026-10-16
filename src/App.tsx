@@ -17,6 +17,8 @@ import {
   Search,
   LogOut,
   ChevronDown,
+  ChevronLeft,
+  ChevronRight,
   Menu,
   X,
   Sun,
@@ -114,6 +116,9 @@ export default function App() {
     [schoolChoice, setSchoolChoice] = useState(""),
     [page, setPage] = useState("dashboard"),
     [mobile, setMobile] = useState(false),
+    [collapsed, setCollapsed] = useState(
+      localStorage.getItem("academy-sidebar-collapsed") === "true",
+    ),
     [more, setMore] = useState(false),
     [toast, setToast] = useState(""),
     [dark, setDark] = useState(
@@ -293,7 +298,24 @@ export default function App() {
     session?.user.email?.split("@")[0] ||
     (preview ? "Equipe da escola" : "Minha conta");
   return (
-    <div className={"app " + (parent ? "parent-app" : "")}>
+    <div
+      className={
+        "app " +
+        (parent ? "parent-app " : "") +
+        (collapsed ? "sidebar-collapsed" : "")
+      }
+    >
+      <button
+        className="sidebar-toggle"
+        aria-label={collapsed ? "Expandir menu" : "Recolher menu"}
+        aria-expanded={!collapsed}
+        onClick={() => {
+          setCollapsed(!collapsed);
+          localStorage.setItem("academy-sidebar-collapsed", String(!collapsed));
+        }}
+      >
+        {collapsed ? <ChevronRight size={18} /> : <ChevronLeft size={18} />}
+      </button>
       <aside className={"sidebar " + (mobile ? "open" : "")}>
         <div className="sidebar-top">
           <Brand />
@@ -348,6 +370,8 @@ export default function App() {
             return (
               <button
                 key={id}
+                title={title(id)}
+                aria-label={title(id)}
                 className={actualPage === id ? "active" : ""}
                 onClick={() => navigate(id)}
               >
@@ -360,8 +384,16 @@ export default function App() {
           {!parent && (
             <>
               <button
+                aria-label="Mais módulos"
+                title="Mais módulos"
                 className={more ? "expanded" : ""}
-                onClick={() => setMore(!more)}
+                onClick={() => {
+                  if (collapsed) {
+                    setCollapsed(false);
+                    localStorage.setItem("academy-sidebar-collapsed", "false");
+                  }
+                  setMore(!more);
+                }}
               >
                 <MoreHorizontal size={19} />
                 <span>Mais módulos</span>
@@ -372,6 +404,8 @@ export default function App() {
                   {moreNav.filter(canAccess).map((id) => (
                     <button
                       key={id}
+                      title={title(id)}
+                      aria-label={title(id)}
                       className={actualPage === id ? "active" : ""}
                       onClick={() => navigate(id)}
                     >
@@ -400,6 +434,8 @@ export default function App() {
               className={
                 "sidebar-setting " + (actualPage === "settings" ? "active" : "")
               }
+              title="Configurações"
+              aria-label="Configurações"
               onClick={() => navigate("settings")}
             >
               <SettingsIcon size={18} />
@@ -577,6 +613,8 @@ export default function App() {
             return (
               <button
                 key={id}
+                title={title(id)}
+                aria-label={title(id)}
                 className={actualPage === id ? "active" : ""}
                 onClick={() => navigate(id)}
               >
