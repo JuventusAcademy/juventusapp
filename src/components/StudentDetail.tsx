@@ -1,3 +1,4 @@
+import { demoGuardianName } from "../lib/studentDemo";
 import { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { Upload, FileText } from "lucide-react";
@@ -82,8 +83,10 @@ export default function StudentDetail({
           all = all.map((r) => ({
             ...r,
             name:
-              data.find((g) => g.id === r.guardian_id)?.name ||
-              "Vínculo autorizado",
+              demoGuardianName(
+                row,
+                data.find((g) => g.id === r.guardian_id)?.name,
+              ) || "Vínculo autorizado",
           }));
         }
       }

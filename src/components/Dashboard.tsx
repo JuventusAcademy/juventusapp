@@ -229,11 +229,7 @@ export default function Dashboard({
               <h2>
                 {financial ? "Receita da escola" : "Atletas por categoria"}
               </h2>
-              <p>
-                {financial
-                  ? "Valores efetivamente recebidos, por mês."
-                  : "Matrículas ativas das turmas autorizadas."}
-              </p>
+              {!financial && <p>Matrículas ativas das turmas autorizadas.</p>}
             </div>
             <span className="subtle-icon">
               <TrendingUp size={20} />
@@ -271,12 +267,7 @@ export default function Dashboard({
                   <small>Não foi possível carregar a comparação.</small>
                 )}
               </div>
-              {compare && previous.isSuccess && !hasPreviousReceipts && (
-                <p className="comparison-empty">
-                  Sem receitas no período anterior. A linha de comparação
-                  aparecerá quando houver valores registrados.
-                </p>
-              )}
+
               <div className="chart revenue-bars">
                 <ResponsiveContainer width="100%" height="100%">
                   <ComposedChart
@@ -375,7 +366,7 @@ export default function Dashboard({
                   <i />
                   Período selecionado
                 </span>
-                {compare && (
+                {compare && hasPreviousReceipts && (
                   <span>
                     <i className="comparison-key" />
                     Período anterior

@@ -4356,3 +4356,51 @@ td {
     padding: 0 18px 20px;
   }
 }
+
+/* Subtle kit detail without reducing the readability of student information. */
+.student-card-body {
+  position: relative;
+  isolation: isolate;
+}
+.student-card-body::before {
+  content: "";
+  position: absolute;
+  inset: 8px 0 0 auto;
+  width: 64%;
+  background: url("/juventus-home-cutout.png") center right / contain no-repeat;
+  opacity: 0.065;
+  transform: rotate(8deg);
+  pointer-events: none;
+  z-index: -1;
+}
+[data-theme="dark"] .student-card-body::before {
+  opacity: 0.09;
+}
+.guardian-photo {
+  width: 42px;
+  height: 42px;
+  object-fit: cover;
+  border-radius: 9px;
+  flex-shrink: 0;
+}
+.student-guardian {
+  background: color-mix(in srgb, var(--panel) 80%, transparent);
+}
+.modal.student-drawer {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.modal.student-drawer::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+}
+html:has(dialog[open]) {
+  overflow: hidden;
+}
+.dashboard-grid {
+  align-items: start;
+}
+.agenda-panel {
+  align-self: start;
+}

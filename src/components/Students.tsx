@@ -1,3 +1,8 @@
+import {
+  isDemoStudent,
+  demoGuardianName,
+  demoGuardianPhoto,
+} from "../lib/studentDemo";
 import { useEffect, useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import {
@@ -123,7 +128,10 @@ function details(row: Row, c: Context) {
     .join(", ");
   const links = c.links.filter((l) => l.student_id === row.id);
   const link = links.find((l) => l.billing) || links[0];
-  const guardian = c.guardians.find((g) => g.id === link?.guardian_id);
+  const storedGuardian = c.guardians.find((g) => g.id === link?.guardian_id);
+  const guardian: Row | undefined = storedGuardian
+    ? { ...storedGuardian, name: demoGuardianName(row, storedGuardian.name) }
+    : undefined;
   const attendance = c.attendance.filter((a) => a.student_id === row.id);
   const counts = {
     present: attendance.filter((a) => a.status === "present").length,
@@ -803,7 +811,16 @@ export default function Students({
                   </div>
                   {financial && (
                     <div className="student-guardian">
-                      <UserRound size={20} />
+                      {d.guardian && isDemoStudent(row) ? (
+                        <img
+                          className="guardian-photo"
+                          src={demoGuardianPhoto(row)}
+                          alt="Foto de exemplo do responsável"
+                          loading="lazy"
+                        />
+                      ) : (
+                        <UserRound size={20} />
+                      )}
                       <span>
                         <strong>
                           {context.isPending
@@ -914,3 +931,4 @@ export default function Students({
     </>
   );
 }
+

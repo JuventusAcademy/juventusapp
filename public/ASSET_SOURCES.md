@@ -7,3 +7,5 @@
 - Versão recortada: fundo removido com ferramenta de edição de imagem para composição sobre preto.
 
 - Retratos temporários de exemplo: https://preskool.dreamstechnologies.com/html/student-details.html (assets/img/students). Exibidos somente nos alunos Demo; não representam os alunos cadastrados.
+
+- Fotos temporárias dos responsáveis Demo: referência Preskool, assets/img/parents/parent-01.jpg e parent-02.jpg.
