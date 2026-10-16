@@ -9,3 +9,5 @@
 - Retratos temporários de exemplo: https://preskool.dreamstechnologies.com/html/student-details.html (assets/img/students). Exibidos somente nos alunos Demo; não representam os alunos cadastrados.
 
 - Fotos temporárias dos responsáveis Demo: referência Preskool, assets/img/parents/parent-01.jpg e parent-02.jpg.
+
+- Marca d’água Juventus: https://www.juventus.com/images/image/upload/f_auto/dev/assets/logo/juventus_logo_white (logo oficial do site do clube).

@@ -4455,3 +4455,56 @@ html:has(dialog[open]) {
     gap: 10px;
   }
 }
+
+/* Official club crest behind the application, without covering content. */
+.workspace {
+  position: relative;
+  isolation: isolate;
+}
+.workspace::before {
+  content: "";
+  position: fixed;
+  inset: 0 0 0 246px;
+  background: url("/juventus-crest.png") 74% 54% / min(38vw, 480px) auto
+    no-repeat;
+  filter: invert(1);
+  opacity: 0.045;
+  pointer-events: none;
+  z-index: -1;
+}
+.sidebar-collapsed .workspace::before {
+  left: 84px;
+}
+[data-theme="dark"] .workspace::before {
+  filter: none;
+  opacity: 0.045;
+}
+.auth-form-side,
+.onboarding {
+  position: relative;
+  isolation: isolate;
+}
+.auth-form-side::before,
+.onboarding::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url("/juventus-crest.png") center / 60% auto no-repeat;
+  filter: invert(1);
+  opacity: 0.03;
+  z-index: -1;
+  pointer-events: none;
+}
+[data-theme="dark"] .auth-form-side::before,
+[data-theme="dark"] .onboarding::before {
+  filter: none;
+}
+@media (max-width: 760px) {
+  .workspace::before,
+  .sidebar-collapsed .workspace::before {
+    left: 0;
+    background-position: center;
+    background-size: 70vw auto;
+    opacity: 0.035;
+  }
+}

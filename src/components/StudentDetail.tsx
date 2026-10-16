@@ -1,4 +1,5 @@
-import { demoGuardianName } from "../lib/studentDemo";
+import { demoDetailRows } from "../lib/demoStudentDetails";
+import { demoGuardianName, isDemoStudent } from "../lib/studentDemo";
 import { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { Upload, FileText } from "lucide-react";
@@ -56,7 +57,7 @@ export default function StudentDetail({
     queryKey: ["student-detail", school, row.id, tab],
     enabled: tab !== "Ficha",
     queryFn: async () => {
-      if (preview) return [];
+      if (preview) return demoDetailRows(row, tab);
       const table = tables[tab];
       let all: Row[] = [];
       for (let page = 0; ; page++) {
@@ -71,6 +72,7 @@ export default function StudentDetail({
         all = all.concat(data as Row[]);
         if (data.length < 500) break;
       }
+      if (!all.length && isDemoStudent(row)) return demoDetailRows(row, tab);
       if (tab === "Responsáveis") {
         const ids = all.map((r) => r.guardian_id);
         if (ids.length) {
@@ -82,6 +84,10 @@ export default function StudentDetail({
           if (error) throw error;
           all = all.map((r) => ({
             ...r,
+            email: data.find((g) => g.id === r.guardian_id)?.email,
+            phone:
+              data.find((g) => g.id === r.guardian_id)?.phone ||
+              (isDemoStudent(row) ? "(00) 00000-0000" : ""),
             name:
               demoGuardianName(
                 row,
@@ -93,7 +99,7 @@ export default function StudentDetail({
       if (tab === "Turmas") {
         const { data, error } = await db()
           .from("teams")
-          .select("id,name")
+          .select("id,name,schedule,location")
           .eq("school_id", school)
           .in(
             "id",
@@ -103,6 +109,39 @@ export default function StudentDetail({
         all = all.map((r) => ({
           ...r,
           name: data.find((t) => t.id === r.team_id)?.name || "Turma",
+          schedule: data.find((t) => t.id === r.team_id)?.schedule,
+          location: data.find((t) => t.id === r.team_id)?.location,
+        }));
+      }
+      if (tab === "Presença" && all.length) {
+        const { data, error } = await db()
+          .from("training_sessions")
+          .select("id,name,starts_at")
+          .eq("school_id", school)
+          .in(
+            "id",
+            all.map((r) => r.session_id),
+          );
+        if (error) throw error;
+        all = all.map((r) => ({
+          ...r,
+          name: data.find((t) => t.id === r.session_id)?.name || "Treino",
+          starts_at: data.find((t) => t.id === r.session_id)?.starts_at,
+        }));
+      }
+      if (tab === "Avaliações" && all.length) {
+        const { data, error } = await db()
+          .from("evaluation_criteria")
+          .select("id,name")
+          .eq("school_id", school)
+          .in(
+            "id",
+            all.map((r) => r.criterion_id),
+          );
+        if (error) throw error;
+        all = all.map((r) => ({
+          ...r,
+          name: data.find((c) => c.id === r.criterion_id)?.name || r.name,
         }));
       }
       return all;
@@ -139,6 +178,13 @@ export default function StudentDetail({
   });
   async function openDocument(doc: Row) {
     try {
+      if (
+        isDemoStudent(row) &&
+        String(doc.demo_url || "").startsWith("/demo-documents/")
+      ) {
+        window.open(String(doc.demo_url), "_blank", "noopener,noreferrer");
+        return;
+      }
       const { data, error } = await db()
         .storage.from("student-documents")
         .createSignedUrl(String(doc.storage_path), 60);
@@ -187,7 +233,10 @@ export default function StudentDetail({
       {tab === "Ficha" ? (
         <dl className="details">
           {[
-            ["Telefone", row.phone],
+            [
+              "Telefone",
+              row.phone || (isDemoStudent(row) ? "(00) 00000-0000 · Demo" : ""),
+            ],
             ["Endereço", row.address],
             ["Posição", row.position],
             ["Camisa", row.shirt_number],
@@ -273,10 +322,14 @@ export default function StudentDetail({
                           : tab === "Avaliações"
                             ? `Nota ${r.score} · ${dateLabel(r.evaluated_on)} · ${r.comments || ""}`
                             : tab === "Responsáveis"
-                              ? `${r.relationship} · ${r.billing ? "Financeiro autorizado" : "Sem acesso financeiro"} · ${r.pickup ? "Retirada autorizada" : "Sem retirada"}`
+                              ? `${r.relationship} · ${r.billing ? "Financeiro autorizado" : "Sem acesso financeiro"} · ${r.pickup ? "Retirada autorizada" : "Sem retirada"} · ${r.phone || r.email || "Contato não informado"}`
                               : tab === "Turmas"
-                                ? `${dateLabel(r.started_on)} · ${statusLabels[String(r.status)]}`
-                                : dateLabel(r.created_at)}
+                                ? `${dateLabel(r.started_on)} · ${statusLabels[String(r.status)]} · ${r.schedule || "Horário a definir"} · ${r.location || "Local a definir"}`
+                                : tab === "Presença"
+                                  ? `${statusLabels[String(r.status)]} · ${dateLabel(r.starts_at || r.created_at, true)}`
+                                  : tab === "Documentos" && r.demo_url
+                                    ? "Documento fictício de exemplo · sem validade"
+                                    : dateLabel(r.created_at)}
                       </p>
                     </div>
                     {tab === "Documentos" && (
