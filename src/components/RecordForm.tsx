@@ -7,7 +7,16 @@ import { related, saveRow } from "../lib/data";
 import { friendlyError } from "../lib/supabase";
 import { today } from "../domain";
 import type { Row } from "../domain";
-import type { Module } from "../modules";
+import {
+  UserRound,
+  Contact,
+  Shirt,
+  ShieldCheck,
+  ArrowLeft,
+  Save,
+} from "lucide-react";
+import { isDemoStudent, demoStudentPhoto } from "../lib/studentDemo";
+import type { Module, Field } from "../modules";
 import { Modal } from "./ui";
 export default function RecordForm({
   module,
@@ -15,12 +24,14 @@ export default function RecordForm({
   row,
   onClose,
   onSaved,
+  embedded = false,
 }: {
   module: Module;
   school: string;
   row?: Row;
   onClose: () => void;
   onSaved: (s: string) => void;
+  embedded?: boolean;
 }) {
   const refs = [
     ...new Set(module.fields.flatMap((f) => (f.ref ? [f.ref] : []))),
@@ -52,7 +63,13 @@ export default function RecordForm({
           );
       else {
         let s = z.string().trim();
-        if (f.required) s = s.min(1, "Preencha este campo.");
+        if (f.required)
+          s = s.min(
+            f.key === "name" && module.id === "students" ? 2 : 1,
+            f.key === "name" && module.id === "students"
+              ? "Informe pelo menos 2 caracteres."
+              : "Preencha este campo.",
+          );
         if (f.type === "email")
           shape[f.key] = f.required
             ? z.email("Informe um e-mail válido.")
@@ -155,6 +172,7 @@ export default function RecordForm({
   );
   const {
     register,
+    watch,
     handleSubmit,
     formState: { errors },
   } = useForm<Record<string, unknown>>({
@@ -182,68 +200,186 @@ export default function RecordForm({
       onClose();
     },
   });
+  const renderField = (f: Field) => (
+    <label
+      key={f.key}
+      className={
+        f.type === "textarea" || (embedded && f.key === "address")
+          ? "span-2"
+          : f.type === "checkbox"
+            ? "check-field"
+            : ""
+      }
+    >
+      <span>
+        {f.label}
+        {f.required ? " *" : ""}
+      </span>
+      {f.type === "select" ? (
+        <select {...register(f.key)}>
+          <option value="">Selecione</option>
+          {f.ref
+            ? (options[refs.indexOf(f.ref)]?.data || [])
+                .filter((r) => r.active !== false || r.id === row?.[f.key])
+                .map((r) => (
+                  <option key={r.id} value={r.id}>
+                    {r.name || r.id}
+                  </option>
+                ))
+            : f.options?.map((o) => (
+                <option key={o.value} value={o.value}>
+                  {o.label}
+                </option>
+              ))}
+        </select>
+      ) : f.type === "textarea" ? (
+        <textarea rows={4} {...register(f.key)} />
+      ) : (
+        <input
+          {...register(f.key)}
+          type={f.key === "phone" ? "tel" : f.type || "text"}
+          autoComplete={
+            f.key === "name"
+              ? "name"
+              : f.key === "phone"
+                ? "tel"
+                : f.key === "address"
+                  ? "street-address"
+                  : undefined
+          }
+          aria-invalid={!!errors[f.key]}
+          min={f.min}
+          max={f.type === "date" && f.key === "birth_date" ? today() : f.max}
+          step={f.step}
+        />
+      )}
+      <small>{(errors[f.key]?.message as string) || f.hint}</small>
+    </label>
+  );
+  const sections = [
+    {
+      id: "student-personal",
+      title: "Dados do atleta",
+      description: "Identificação e nascimento do aluno.",
+      Icon: UserRound,
+      keys: ["name", "birth_date"],
+    },
+    {
+      id: "student-contact",
+      title: "Contato e endereço",
+      description: "Informações para contato e localização.",
+      Icon: Contact,
+      keys: ["phone", "address"],
+    },
+    {
+      id: "student-sport",
+      title: "Perfil esportivo",
+      description: "Posição e identificação dentro de campo.",
+      Icon: Shirt,
+      keys: ["position", "shirt_number"],
+    },
+    {
+      id: "student-registration",
+      title: "Cadastro e autorizações",
+      description: "Situação do aluno e registro da autorização de imagem.",
+      Icon: ShieldCheck,
+      keys: ["status", "joined_on", "image_consent"],
+    },
+  ];
   const blocked = options.some((q) => q.isPending || q.isError);
   return (
-    <Modal
+    <RecordFrame
       title={(row ? "Editar " : "Cadastrar ") + module.singular}
       onClose={onClose}
-      wide
+      embedded={embedded}
     >
-      <form onSubmit={handleSubmit((v) => mutation.mutate(v))}>
-        <div className="form-grid">
-          {module.fields.map((f) => (
-            <label
-              key={f.key}
-              className={
-                f.type === "textarea"
-                  ? "span-2"
-                  : f.type === "checkbox"
-                    ? "check-field"
-                    : ""
-              }
-            >
-              <span>
-                {f.label}
-                {f.required ? " *" : ""}
-              </span>
-              {f.type === "select" ? (
-                <select {...register(f.key)}>
-                  <option value="">Selecione</option>
-                  {f.ref
-                    ? (options[refs.indexOf(f.ref)]?.data || [])
-                        .filter(
-                          (r) => r.active !== false || r.id === row?.[f.key],
-                        )
-                        .map((r) => (
-                          <option key={r.id} value={r.id}>
-                            {r.name || r.id}
-                          </option>
-                        ))
-                    : f.options?.map((o) => (
-                        <option key={o.value} value={o.value}>
-                          {o.label}
-                        </option>
-                      ))}
-                </select>
-              ) : f.type === "textarea" ? (
-                <textarea rows={4} {...register(f.key)} />
-              ) : (
-                <input
-                  {...register(f.key)}
-                  type={f.type || "text"}
-                  min={f.min}
-                  max={
-                    f.type === "date" && f.key === "birth_date"
-                      ? today()
-                      : f.max
-                  }
-                  step={f.step}
-                />
-              )}
-              <small>{(errors[f.key]?.message as string) || f.hint}</small>
-            </label>
-          ))}
-        </div>
+      <form
+        className={embedded ? "student-editor-form" : ""}
+        onSubmit={handleSubmit((v) => mutation.mutate(v))}
+      >
+        {embedded ? (
+          <div className="student-editor-layout">
+            <aside className="student-editor-sidebar">
+              <div className="panel editor-identity">
+                {row && isDemoStudent(row) ? (
+                  <img
+                    src={demoStudentPhoto(row)}
+                    alt="Foto de exemplo do atleta"
+                  />
+                ) : (
+                  <span className="editor-avatar">
+                    <UserRound size={32} />
+                  </span>
+                )}
+                <strong>{String(watch("name") || "Novo atleta")}</strong>
+                <small>
+                  {row
+                    ? "Matrícula " + row.registration_code
+                    : "A matrícula será gerada ao salvar"}
+                </small>
+              </div>
+              <nav
+                className="panel editor-section-nav"
+                aria-label="Seções do cadastro"
+              >
+                <strong>Neste cadastro</strong>
+                {sections.map(({ id, title, Icon }) => (
+                  <button
+                    key={id}
+                    type="button"
+                    onClick={() =>
+                      document.getElementById(id)?.scrollIntoView({
+                        behavior: window.matchMedia(
+                          "(prefers-reduced-motion: reduce)",
+                        ).matches
+                          ? "instant"
+                          : "smooth",
+                        block: "start",
+                      })
+                    }
+                  >
+                    <Icon size={17} />
+                    {title}
+                  </button>
+                ))}
+              </nav>
+              <p className="editor-help">
+                Campos com * são obrigatórios. Os dados serão vinculados à
+                Juventus Academy São Carlos.
+              </p>
+            </aside>
+            <div className="student-editor-sections">
+              {sections.map(({ id, title, description, Icon }) => (
+                <section
+                  id={id}
+                  key={id}
+                  className="panel student-editor-section"
+                >
+                  <header>
+                    <span>
+                      <Icon size={20} />
+                    </span>
+                    <div>
+                      <h2>{title}</h2>
+                      <p>{description}</p>
+                    </div>
+                  </header>
+                  <div className="form-grid">
+                    {sections
+                      .find((section) => section.id === id)!
+                      .keys.map((key) =>
+                        module.fields.find((f) => f.key === key),
+                      )
+                      .filter((f): f is Field => !!f)
+                      .map(renderField)}
+                  </div>
+                </section>
+              ))}
+            </div>
+          </div>
+        ) : (
+          <div className="form-grid">{module.fields.map(renderField)}</div>
+        )}
         {options.some((q) => q.isError) && (
           <p className="error-text">
             Não foi possível carregar os cadastros relacionados. Feche e tente
@@ -255,7 +391,7 @@ export default function RecordForm({
             {friendlyError(mutation.error)}
           </p>
         )}
-        <div className="modal-actions">
+        <div className={embedded ? "student-editor-actions" : "modal-actions"}>
           <button type="button" className="btn secondary" onClick={onClose}>
             Cancelar
           </button>
@@ -263,10 +399,53 @@ export default function RecordForm({
             disabled={mutation.isPending || blocked}
             className="btn primary"
           >
-            {mutation.isPending ? "Salvando…" : "Salvar " + module.singular}
+            <Save size={16} />
+            {mutation.isPending
+              ? "Salvando…"
+              : embedded
+                ? row
+                  ? "Salvar alterações"
+                  : "Cadastrar aluno"
+                : "Salvar " + module.singular}
           </button>
         </div>
       </form>
+    </RecordFrame>
+  );
+}
+
+function RecordFrame({
+  title,
+  onClose,
+  embedded,
+  children,
+}: {
+  title: string;
+  onClose: () => void;
+  embedded: boolean;
+  children: React.ReactNode;
+}) {
+  return embedded ? (
+    <div className="student-editor">
+      <div className="page-title">
+        <div>
+          <button type="button" className="text-btn" onClick={onClose}>
+            <ArrowLeft size={16} />
+            Voltar aos alunos
+          </button>
+          <h1>{title}</h1>
+          <p>Informações do atleta, contato e participação na escola.</p>
+        </div>
+        <span className="editor-school-label">
+          <ShieldCheck size={16} />
+          Juventus Academy São Carlos
+        </span>
+      </div>
+      {children}
+    </div>
+  ) : (
+    <Modal title={title} onClose={onClose} wide>
+      {children}
     </Modal>
   );
 }

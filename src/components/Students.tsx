@@ -505,6 +505,24 @@ export default function Students({
       </>
     );
   };
+  useEffect(() => {
+    if (edit !== undefined) window.scrollTo({ top: 0 });
+  }, [edit]);
+  if (edit !== undefined)
+    return (
+      <RecordForm
+        key={edit?.id || "new-student"}
+        module={module}
+        school={school}
+        row={edit || undefined}
+        embedded
+        onClose={() => {
+          setEdit(undefined);
+          window.scrollTo({ top: 0 });
+        }}
+        onSaved={notify}
+      />
+    );
   if (full)
     return (
       <>
