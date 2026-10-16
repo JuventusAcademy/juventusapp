@@ -11,3 +11,4 @@
 - Fotos temporárias dos responsáveis Demo: referência Preskool, assets/img/parents/parent-01.jpg e parent-02.jpg.
 
 - Marca d’água Juventus: https://www.juventus.com/images/image/upload/f_auto/dev/assets/logo/juventus_logo_white (logo oficial do site do clube).
+- Logo vetorial de fundo: https://commons.wikimedia.org/wiki/File:Juventus_FC_-_logo_black_(Italy,_2020).svg — Interbrand / Juventus Football Club. Substitui o PNG de baixa resolução em 16/10/2026.

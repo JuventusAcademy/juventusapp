@@ -4489,9 +4489,9 @@ html:has(dialog[open]) {
   content: "";
   position: fixed;
   inset: 0 0 0 246px;
-  background: url("/juventus-crest.png") 74% 54% / min(38vw, 480px) auto
+  background: url("/juventus-crest.svg") 74% 54% / min(38vw, 480px) auto
     no-repeat;
-  filter: invert(1);
+  filter: none;
   opacity: 0.045;
   pointer-events: none;
   z-index: -1;
@@ -4500,7 +4500,7 @@ html:has(dialog[open]) {
   left: 84px;
 }
 [data-theme="dark"] .workspace::before {
-  filter: none;
+  filter: invert(1);
   opacity: 0.045;
 }
 .auth-form-side,
@@ -4513,15 +4513,15 @@ html:has(dialog[open]) {
   content: "";
   position: absolute;
   inset: 0;
-  background: url("/juventus-crest.png") center / 60% auto no-repeat;
-  filter: invert(1);
+  background: url("/juventus-crest.svg") center / 60% auto no-repeat;
+  filter: none;
   opacity: 0.03;
   z-index: -1;
   pointer-events: none;
 }
 [data-theme="dark"] .auth-form-side::before,
 [data-theme="dark"] .onboarding::before {
-  filter: none;
+  filter: invert(1);
 }
 @media (max-width: 760px) {
   .workspace::before,
@@ -4540,16 +4540,16 @@ html:has(dialog[open]) {
 }
 .workspace::before,
 [data-theme="dark"] .workspace::before {
-  opacity: 0.075;
+  opacity: 0.13;
 }
 .auth-form-side::before,
 .onboarding::before {
-  opacity: 0.05;
+  opacity: 0.1;
 }
 @media (max-width: 760px) {
   .workspace::before,
   .sidebar-collapsed .workspace::before {
-    opacity: 0.065;
+    opacity: 0.12;
   }
   .stats .stat {
     grid-template-columns: minmax(0, 1fr);
