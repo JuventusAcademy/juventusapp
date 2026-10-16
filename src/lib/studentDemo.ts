@@ -28,5 +28,6 @@ export function demoGuardianName(row: Row, original: unknown) {
 }
 export function demoGuardianPhoto(row: Row) {
   const index = Number(String(row.registration_code).match(/\d+$/)?.[0] || 1);
-  return `/demo-guardians/parent-${index % 2 ? "01" : "02"}.jpg`;
+  return `/demo-guardians/parent-${index % 2 ? "02" : "01"}.jpg`;
 }
+
