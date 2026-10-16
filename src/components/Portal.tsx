@@ -161,7 +161,7 @@ export default function Portal({
         <>
           <div className="portal-grid">
             <section className="panel padded">
-              <CalendarDays className="orange-text" size={24} />
+              <CalendarDays className="brand-text" size={24} />
               <h2>Próximo treino</h2>
               {q.data.sessions[0] ? (
                 <>
@@ -180,7 +180,7 @@ export default function Portal({
               </button>
             </section>
             <section className="panel padded">
-              <Wallet className="orange-text" size={24} />
+              <Wallet className="brand-text" size={24} />
               <h2>Próxima mensalidade</h2>
               {q.data.invoices[0] ? (
                 <>

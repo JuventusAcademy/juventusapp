@@ -36,3 +36,6 @@ TypeScript e build de produção; testes de cálculos financeiros, paginação e
 ## Dependências externas
 
 URL e chave pública Supabase, migrations aplicadas, primeiro administrador provisionado; credenciais privadas Asaas no secret store das Edge Functions; autenticação GitHub/Vercel para publicação. Não gravar nem solicitar secrets no chat.
+
+## Revisão visual — identidade Juventus
+Paleta atual: preto #000000, branco #ffffff, grafite #171717, cinza #737373 e fundo #f5f5f5. Sidebar e área de acesso pretas, seleção branca, ações de alto contraste e gráficos monocromáticos. Tipografia Barlow e estrutura mantidas; tons de estado usados apenas para informação operacional. Revisão: sem azul ou laranja como cores de marca; o campo de futebol e a logo oficial continuam como elementos próprios da escola.

@@ -56,7 +56,7 @@ export default function Settings({
       </div>
       <div className="settings-grid">
         <section className="panel padded">
-          <ShieldCheck size={25} className="orange-text" />
+          <ShieldCheck size={25} className="brand-text" />
           <h2>Convide sua equipe</h2>
           <p>
             O perfil é atribuído no servidor. Vínculos de professores e
@@ -106,7 +106,7 @@ export default function Settings({
           </form>
         </section>
         <section className="panel padded">
-          <Link2 size={25} className="orange-text" />
+          <Link2 size={25} className="brand-text" />
           <h2>Integrações</h2>
           <div className="integration-row">
             <Database size={20} />

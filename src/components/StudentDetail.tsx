@@ -240,8 +240,8 @@ export default function StudentDetail({
                       <Radar
                         name="Nota"
                         dataKey="score"
-                        stroke="#ff793f"
-                        fill="#ff793f"
+                        stroke="var(--chart-line)"
+                        fill="var(--chart-line)"
                         fillOpacity={0.22}
                       />
                     </RadarChart>

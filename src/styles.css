@@ -5,17 +5,19 @@
 }
 :root {
   font-family: "Barlow", sans-serif;
-  color: #172b43;
-  background: #f3f5f8;
+  color: #171717;
+  background: #f5f5f5;
   font-synthesis: none;
-  --navy: #10263e;
-  --orange: #ff793f;
-  --bg: #f3f5f8;
+  --brand-dark: #000000;
+  --accent: #171717;
+  --accent-contrast: #ffffff;
+  --chart-line: #262626;
+  --bg: #f5f5f5;
   --panel: #fff;
-  --text: #172b43;
-  --muted: #748294;
-  --border: #e7ebf0;
-  --subtle: #f8fafc;
+  --text: #171717;
+  --muted: #838383;
+  --border: #ebebeb;
+  --subtle: #fafafa;
   color-scheme: light;
 }
 * {
@@ -47,7 +49,7 @@ a:focus-visible,
 input:focus-visible,
 select:focus-visible,
 textarea:focus-visible {
-  outline: 3px solid #ff793f99;
+  outline: 3px solid #73737399;
   outline-offset: 3px;
 }
 button {
@@ -108,7 +110,7 @@ textarea::placeholder {
 input[type="checkbox"] {
   min-height: 18px;
   width: 18px;
-  accent-color: var(--orange);
+  accent-color: var(--accent);
 }
 select {
   cursor: pointer;
@@ -138,12 +140,12 @@ label small {
   transition: background 0.15s;
 }
 .btn.primary {
-  background: var(--orange);
-  color: #1b2b3e;
-  box-shadow: 0 3px 7px #fc804524;
+  background: var(--accent);
+  color: var(--accent-contrast);
+  box-shadow: 0 3px 7px #00000012;
 }
 .btn.primary:hover:not(:disabled) {
-  background: #ff8b57;
+  background: color-mix(in srgb, var(--accent) 85%, var(--panel));
 }
 .btn.secondary {
   background: var(--panel);
@@ -175,7 +177,7 @@ label small {
   gap: 6px;
   font-weight: 600;
   font-size: 13px;
-  color: #bd4c21;
+  color: #636363;
 }
 .brand {
   display: flex;
@@ -190,8 +192,8 @@ label small {
 .brand-icon {
   display: grid;
   place-items: center;
-  color: var(--orange);
-  border: 1.5px solid #ff793f88;
+  color: var(--accent);
+  border: 1.5px solid #ffffff88;
   border-radius: 11px;
   width: 40px;
   height: 43px;
@@ -205,15 +207,15 @@ label small {
   font-weight: 400;
   font-size: 10px;
   letter-spacing: 0.15px;
-  color: #a6b7c9;
+  color: #b7b7b7;
   margin-top: 6px;
 }
 .sidebar {
   width: 246px;
   position: fixed;
   inset: 0 auto 0 0;
-  background: var(--navy);
-  color: #b6c2d1;
+  background: var(--brand-dark);
+  color: #c3c3c3;
   z-index: 50;
   display: flex;
   flex-direction: column;
@@ -248,7 +250,7 @@ label small {
 }
 .school-switch strong {
   display: block;
-  color: #edf3fa;
+  color: #f3f3f3;
   font-size: 12px;
   font-weight: 600;
   overflow: hidden;
@@ -258,7 +260,7 @@ label small {
 .school-switch small {
   display: block;
   font-size: 10px;
-  color: #8396ad;
+  color: #979797;
   margin-top: 4px;
 }
 .school-switch select {
@@ -266,12 +268,12 @@ label small {
   font-size: 10px;
   padding: 4px;
   min-height: 24px;
-  background: var(--navy);
+  background: var(--brand-dark);
   color: white;
 }
 .sidebar-label {
   font-size: 11px;
-  color: #748ba5;
+  color: #8c8c8c;
   padding-left: 17px;
   margin-bottom: 9px;
 }
@@ -287,11 +289,11 @@ label small {
   border-radius: 7px;
   position: relative;
   margin: 3px 0;
-  color: #a9b9cd;
+  color: #bababa;
 }
 .sidebar nav > button.active {
-  background: #ff793f;
-  color: #10263e;
+  background: #ffffff;
+  color: #000000;
   font-weight: 650;
 }
 .sidebar nav > button:not(.active):hover,
@@ -303,7 +305,7 @@ label small {
   width: 5px;
   height: 5px;
   border-radius: 50%;
-  background: #10263e;
+  background: #000000;
   margin-left: auto;
 }
 .sidebar nav > button > svg:last-child:not(:first-child) {
@@ -327,12 +329,12 @@ label small {
 }
 .sidebar-note strong {
   font-size: 14px;
-  color: #d6e0ed;
+  color: #e1e1e1;
   font-weight: 500;
   line-height: 1.5;
 }
 .sidebar-note small {
-  color: #7d92aa;
+  color: #939393;
   font-size: 10px;
   margin-top: 6px;
 }
@@ -345,7 +347,7 @@ label small {
   display: flex;
   align-items: center;
   gap: 10px;
-  background: #091d33;
+  background: #080808;
   margin: 0 -17px;
   width: calc(100% + 34px);
   padding: 18px 22px;
@@ -364,13 +366,13 @@ label small {
 }
 .profile-switch small {
   font-size: 10px;
-  color: #859bb3;
+  color: #9c9c9c;
   display: block;
   margin-top: 3px;
 }
 .avatar {
-  background: #e7eef6;
-  color: #385c7e;
+  background: #eeeeee;
+  color: #5b5b5b;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -382,8 +384,8 @@ label small {
   flex-shrink: 0;
 }
 .profile-switch .avatar {
-  background: #29435e;
-  color: #dce8f6;
+  background: #434343;
+  color: #e9e9e9;
 }
 .avatar.large {
   width: 62px;
@@ -424,7 +426,7 @@ label small {
   gap: 10px;
   align-items: center;
   font-size: 12px;
-  color: #8a97a6;
+  color: #989898;
   margin-right: 12px;
 }
 .search-shortcut kbd {
@@ -447,7 +449,7 @@ label small {
   position: absolute;
   right: 8px;
   top: 7px;
-  background: var(--orange);
+  background: var(--accent);
   width: 5px;
   height: 5px;
   border-radius: 50%;
@@ -486,14 +488,14 @@ label small {
 .season-label > span {
   width: 6px;
   height: 6px;
-  background: #36846c;
+  background: #626262;
   border-radius: 50%;
 }
 .welcome {
   position: relative;
   overflow: hidden;
   border-radius: 13px;
-  background: #142e49;
+  background: #000000;
   color: #fff;
   padding: 27px 31px;
   margin-bottom: 23px;
@@ -511,7 +513,7 @@ label small {
   align-items: center;
   font-size: 10px;
   font-weight: 500;
-  color: #e8ac84;
+  color: #e5e5e5;
   margin-bottom: 10px;
 }
 .welcome h2 {
@@ -522,7 +524,7 @@ label small {
 }
 .welcome p {
   font-size: 11px;
-  color: #99afc5;
+  color: #afafaf;
   margin-top: 8px;
 }
 .welcome button {
@@ -530,7 +532,7 @@ label small {
   align-items: center;
   gap: 12px;
   font-size: 11px;
-  color: #f5ae84;
+  color: #ffffff;
   margin-top: 17px;
   font-weight: 550;
 }
@@ -538,7 +540,7 @@ label small {
   position: absolute;
   width: 355px;
   height: 193px;
-  border: 1px solid #7190ab37;
+  border: 1px solid #ffffff37;
   right: 38px;
   top: 31px;
   transform: rotate(-13deg) skew(-8deg);
@@ -554,20 +556,20 @@ label small {
   position: absolute;
   left: 50%;
   height: 100%;
-  border-left: 1px solid #7190ab44;
+  border-left: 1px solid #ffffff44;
 }
 .pitch-center {
   position: absolute;
   width: 72px;
   height: 72px;
-  border: 1px solid #7190ab44;
+  border: 1px solid #ffffff44;
   border-radius: 50%;
   top: calc(50% - 36px);
   left: calc(50% - 36px);
 }
 .pitch-area {
   position: absolute;
-  border: 1px solid #7190ab44;
+  border: 1px solid #ffffff44;
   width: 51px;
   height: 111px;
   top: calc(50% - 55px);
@@ -582,10 +584,10 @@ label small {
   position: absolute;
   width: 11px;
   height: 11px;
-  background: #f98650;
-  border: 3px solid #ffc79b;
+  background: #ffffff;
+  border: 3px solid #a3a3a3;
   border-radius: 50%;
-  box-shadow: 0 0 0 6px #ff793f15;
+  box-shadow: 0 0 0 6px #ffffff15;
 }
 .p1 {
   top: 75px;
@@ -641,21 +643,9 @@ label small {
   display: grid;
   place-items: center;
 }
-.stat-icon.blue {
-  background: #eaf0f7;
-  color: #45688b;
-}
-.stat-icon.orange {
-  background: #fff0e7;
-  color: #d97642;
-}
-.stat-icon.green {
-  background: #eaf5ee;
-  color: #3e8164;
-}
-.stat-icon.amber {
-  background: #fff6e4;
-  color: #b78737;
+.stat-icon.neutral {
+  background: var(--subtle);
+  color: var(--text);
 }
 .stat-label {
   font-size: 12px;
@@ -742,7 +732,7 @@ label small {
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: var(--orange);
+  background: var(--accent);
 }
 .chart {
   height: 215px;
@@ -774,9 +764,9 @@ label small {
   border-radius: 7px;
 }
 .session-time.accent {
-  border-color: #ffe0ce;
-  background: #fff5ed;
-  color: #c56c3c;
+  border-color: #e4e4e4;
+  background: #f6f6f6;
+  color: #7a7a7a;
 }
 .session-time strong {
   font-size: 14px;
@@ -808,8 +798,8 @@ label small {
   border-radius: 5px;
   white-space: nowrap;
   line-height: 1.2;
-  background: #edf1f6;
-  color: #5a6d83;
+  background: #f1f1f1;
+  color: #6e6e6e;
   font-weight: 500;
 }
 .badge.active,
@@ -828,8 +818,8 @@ label small {
 }
 .badge.scheduled,
 .badge.processing {
-  background: #edf2f9;
-  color: #526f95;
+  background: #f3f3f3;
+  color: #727272;
 }
 .badge.overdue,
 .badge.absent,
@@ -844,8 +834,8 @@ label small {
 }
 .badge.inactive,
 .badge.refunded {
-  background: #f0f1f4;
-  color: #7c8795;
+  background: #f2f2f2;
+  color: #888888;
 }
 .panel-link {
   display: flex;
@@ -857,7 +847,7 @@ label small {
   font-weight: 550;
   border-top: 1px solid var(--border);
   padding: 15px;
-  color: #4f6680;
+  color: #676767;
 }
 .recent-list {
   padding: 0 23px 6px;
@@ -918,7 +908,7 @@ label small {
   height: 100%;
   display: block;
   border-radius: 4px;
-  background: #4a856a;
+  background: #686868;
 }
 .field-stat > small {
   font-size: 9px;
@@ -954,7 +944,7 @@ label small {
 }
 .app-footer > span:first-child {
   font-weight: 650;
-  color: #566b82;
+  color: #6c6c6c;
 }
 .app-footer > small {
   margin-left: auto;
@@ -1081,7 +1071,7 @@ tbody tr:hover {
   min-height: 180px;
 }
 .empty-icon {
-  color: #859cb1;
+  color: #9b9b9b;
   background: var(--subtle);
   border-radius: 50%;
   padding: 17px;
@@ -1158,14 +1148,14 @@ tbody tr:hover {
   max-width: calc(100vw - 32px);
   width: 530px;
   max-height: 90dvh;
-  box-shadow: 0 30px 100px #081d3444;
+  box-shadow: 0 30px 100px #00000044;
   overflow: auto;
 }
 .modal.wide {
   width: 800px;
 }
 .modal::backdrop {
-  background: #08182b88;
+  background: #00000088;
   backdrop-filter: blur(3px);
 }
 .modal-head {
@@ -1217,7 +1207,7 @@ tbody tr:hover {
   width: 100%;
 }
 .form-grid label small {
-  color: #b25e37;
+  color: #6d6d6d;
   font-size: 11px;
   line-height: 1.4;
 }
@@ -1226,7 +1216,7 @@ tbody tr:hover {
   right: 26px;
   bottom: 27px;
   max-width: 430px;
-  background: var(--navy);
+  background: var(--brand-dark);
   color: #fff;
   z-index: 200;
   border: 1px solid #ffffff33;
@@ -1235,14 +1225,14 @@ tbody tr:hover {
   display: flex;
   gap: 15px;
   font-size: 13px;
-  box-shadow: 0 10px 35px #10263e25;
+  box-shadow: 0 10px 35px #00000025;
 }
 .toast button {
-  color: #b5c5d5;
+  color: #c5c5c5;
 }
 .spin {
   animation: spin 1s linear infinite;
-  color: var(--orange);
+  color: var(--accent);
 }
 @keyframes spin {
   to {
@@ -1283,13 +1273,13 @@ tbody tr:hover {
 .more-nav button {
   display: block;
   padding: 8px 14px;
-  color: #a9b9cd;
+  color: #bababa;
   font-size: 12px;
   text-align: left;
   width: 100%;
 }
 .more-nav button.active {
-  color: var(--orange);
+  color: #ffffff;
 }
 .details {
   display: grid;
@@ -1340,7 +1330,7 @@ tbody tr:hover {
   color: var(--muted);
 }
 .tabs button.selected {
-  border-color: var(--orange);
+  border-color: var(--accent);
   color: var(--text);
   font-weight: 600;
 }
@@ -1450,7 +1440,7 @@ tbody tr:hover {
 }
 .child-card {
   padding: 23px;
-  background: var(--navy);
+  background: var(--brand-dark);
   color: white;
   border-radius: 12px;
   display: flex;
@@ -1467,7 +1457,7 @@ tbody tr:hover {
 .child-card small,
 .child-card span:not(.avatar) {
   font-size: 11px;
-  color: #a2b7cd;
+  color: #b7b7b7;
 }
 .child-card select {
   background: none;
@@ -1479,7 +1469,7 @@ tbody tr:hover {
   min-height: 30px;
 }
 .child-card select option {
-  color: #172b43;
+  color: #171717;
   background: white;
 }
 .child-card .icon-btn {
@@ -1506,9 +1496,7 @@ tbody tr:hover {
   font-size: 30px;
   letter-spacing: -0.6px;
 }
-.orange-text {
-  color: #d16c37;
-}
+.brand-text { color: var(--text); }
 .performance-link {
   display: flex;
   align-items: center;
@@ -1516,10 +1504,10 @@ tbody tr:hover {
   text-align: left;
   padding: 22px;
   width: 100%;
-  background: #e9eff6;
+  background: #efefef;
   border-radius: 10px;
   margin-bottom: 22px;
-  color: #345575;
+  color: #555555;
 }
 .performance-link > div {
   flex: 1;
@@ -1561,8 +1549,8 @@ tbody tr:hover {
   margin-bottom: 6px;
 }
 .calendar-day.current > span {
-  background: var(--orange);
-  color: var(--navy);
+  background: var(--accent);
+  color: var(--brand-dark);
   border-radius: 50%;
   font-weight: 600;
 }
@@ -1572,8 +1560,8 @@ tbody tr:hover {
 .calendar-day > button {
   display: block;
   padding: 5px;
-  background: #eef3f8;
-  color: #456787;
+  background: #f3f3f3;
+  color: #666666;
   border-radius: 4px;
   width: 100%;
   font-size: 10px;
@@ -1585,7 +1573,7 @@ tbody tr:hover {
 }
 .calendar-day > button.cancelled {
   text-decoration: line-through;
-  color: #ab554a;
+  color: #6e6e6e;
 }
 .segmented {
   display: flex;
@@ -1600,7 +1588,7 @@ tbody tr:hover {
   border-radius: 5px;
 }
 .segmented .selected {
-  background: var(--navy);
+  background: var(--brand-dark);
   color: #fff;
 }
 .calendar-list-item {
@@ -1711,7 +1699,7 @@ tbody tr:hover {
   background: var(--panel);
 }
 .auth-story {
-  background: var(--navy);
+  background: var(--brand-dark);
   color: white;
   padding: 48px 55px;
   display: flex;
@@ -1729,12 +1717,12 @@ tbody tr:hover {
   z-index: 1;
 }
 .auth-story .season-label {
-  color: #b6c7d8;
+  color: #c7c7c7;
   font-size: 12px;
   margin-bottom: 22px;
 }
 .auth-story .season-label > span {
-  background: var(--orange);
+  background: #ffffff;
 }
 .auth-story h1 {
   font-size: clamp(34px, 3.2vw, 54px);
@@ -1744,7 +1732,7 @@ tbody tr:hover {
 }
 .auth-story p {
   max-width: 40ch;
-  color: #9eb1c6;
+  color: #b2b2b2;
   font-size: 15px;
   margin-top: 24px;
   line-height: 1.8;
@@ -1753,7 +1741,7 @@ tbody tr:hover {
   display: flex;
   gap: 8px;
   align-items: center;
-  color: #95a9bf;
+  color: #aaaaaa;
   font-size: 11px;
 }
 .auth-lines {
@@ -1784,12 +1772,12 @@ tbody tr:hover {
 .auth-lines > i {
   width: 10px;
   height: 10px;
-  background: var(--orange);
+  background: #ffffff;
   border-radius: 50%;
   position: absolute;
   left: 80px;
   top: 100px;
-  box-shadow: 0 0 0 15px #ff793f0c;
+  box-shadow: 0 0 0 15px #ffffff0c;
 }
 .auth-form-side {
   display: flex;
@@ -1806,8 +1794,8 @@ tbody tr:hover {
   height: 49px;
   display: grid;
   place-items: center;
-  background: #fff0e7;
-  color: #c96b3d;
+  background: #f2f2f2;
+  color: #7b7b7b;
   border-radius: 12px;
   margin-bottom: 25px;
 }
@@ -1852,7 +1840,7 @@ tbody tr:hover {
   padding: 0;
   font-size: 11px;
   font-weight: 600;
-  color: #c16b3b;
+  color: #787878;
   margin-top: -4px;
 }
 .login-submit {
@@ -1942,12 +1930,15 @@ tbody tr:hover {
   border: 0;
 }
 [data-theme="dark"] {
-  --bg: #0e1b2a;
-  --panel: #142639;
-  --text: #dce7f2;
-  --muted: #8ea3b9;
-  --border: #263b50;
-  --subtle: #192e43;
+  --accent: #f5f5f5;
+  --accent-contrast: #171717;
+  --chart-line: #e5e5e5;
+  --bg: #0a0a0a;
+  --panel: #171717;
+  --text: #f5f5f5;
+  --muted: #a3a3a3;
+  --border: #333333;
+  --subtle: #202020;
   background: var(--bg);
   color: var(--text);
   color-scheme: dark;
@@ -1958,7 +1949,7 @@ tbody tr:hover {
   color: #a4d4bb;
 }
 [data-theme="dark"] .stat-icon {
-  background: #263b50;
+  background: #333333;
 }
 [data-theme="dark"] .notice {
   background: #3b3023;
@@ -1966,17 +1957,17 @@ tbody tr:hover {
   color: #e1b784;
 }
 [data-theme="dark"] .performance-link {
-  background: #213b52;
-  color: #c2d9ed;
+  background: #3a3a3a;
+  color: #d8d8d8;
 }
 [data-theme="dark"] .error-state {
   background: #472e2e;
   color: #f0b8a9;
 }
 [data-theme="dark"] .session-time.accent {
-  background: #3e3027;
-  border-color: #64482d;
-  color: #f2b083;
+  background: #323232;
+  border-color: #484848;
+  color: #b7b7b7;
 }
 @media (min-width: 1600px) {
   .workspace main {
@@ -2146,12 +2137,12 @@ tbody tr:hover {
     justify-content: space-between;
   }
   .sidebar-top .icon-btn {
-    color: #bccbdc;
+    color: #cccccc;
   }
   .sidebar-overlay {
     position: fixed;
     inset: 0;
-    background: #08182b88;
+    background: #00000088;
     z-index: 40;
   }
   .workspace {
@@ -2205,14 +2196,14 @@ tbody tr:hover {
     min-width: 48px;
   }
   .mobile-nav button.active {
-    color: #d87740;
+    color: var(--text);
   }
   .mobile-nav button.active:before {
     content: "";
     height: 3px;
     width: 20px;
     border-radius: 0 0 3px 3px;
-    background: var(--orange);
+    background: var(--accent);
     position: absolute;
     top: 0;
   }

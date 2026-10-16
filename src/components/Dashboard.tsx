@@ -149,14 +149,14 @@ export default function Dashboard({
           label="Atletas ativos"
           value={d.active.toLocaleString("pt-BR")}
           detail={`${d.students} alunos cadastrados`}
-          color="blue"
+          color="neutral"
         />
         <Stat
           icon={<UserPlus size={21} />}
           label="Novas matrículas"
           value={String(d.new_students)}
           detail="No período selecionado"
-          color="orange"
+          color="neutral"
         />
         {financial ? (
           <>
@@ -165,14 +165,14 @@ export default function Dashboard({
               label="Recebido no período"
               value={currency(d.received)}
               detail="Pagamentos confirmados"
-              color="green"
+              color="neutral"
             />
             <Stat
               icon={<Clock3 size={21} />}
               label="A receber no período"
               value={currency(d.pending)}
               detail={`${currency(d.overdue)} em atraso`}
-              color="amber"
+              color="neutral"
             />
           </>
         ) : (
@@ -182,14 +182,14 @@ export default function Dashboard({
               label="Turmas autorizadas"
               value={String(d.teams)}
               detail="Com acesso pelo seu perfil"
-              color="green"
+              color="neutral"
             />
             <Stat
               icon={<Activity size={21} />}
               label="Frequência"
               value={d.attendance + "%"}
               detail="Justificativas fora da base"
-              color="amber"
+              color="neutral"
             />
           </>
         )}
@@ -236,12 +236,12 @@ export default function Dashboard({
                       >
                         <stop
                           offset="0%"
-                          stopColor="#ff793f"
+                          stopColor="var(--chart-line)"
                           stopOpacity={0.22}
                         />
                         <stop
                           offset="100%"
-                          stopColor="#ff793f"
+                          stopColor="var(--chart-line)"
                           stopOpacity={0}
                         />
                       </linearGradient>
@@ -249,7 +249,7 @@ export default function Dashboard({
                     <CartesianGrid
                       vertical={false}
                       strokeDasharray="3 5"
-                      stroke="#e7ebef"
+                      stroke="var(--border)"
                     />
                     <XAxis
                       dataKey="month"
@@ -261,7 +261,7 @@ export default function Dashboard({
                       }
                       tickLine={false}
                       axisLine={false}
-                      tick={{ fontSize: 12, fill: "#7c8898" }}
+                      tick={{ fontSize: 12, fill: "var(--muted)" }}
                     />
                     <YAxis
                       width={55}
@@ -272,21 +272,23 @@ export default function Dashboard({
                       }
                       tickLine={false}
                       axisLine={false}
-                      tick={{ fontSize: 11, fill: "#7c8898" }}
+                      tick={{ fontSize: 11, fill: "var(--muted)" }}
                     />
                     <Tooltip
                       formatter={(v) => currency(v)}
                       labelFormatter={(v) => String(v)}
                       contentStyle={{
                         borderRadius: 12,
-                        border: "1px solid #e7ebef",
+                        border: "1px solid var(--border)",
+                        background: "var(--panel)",
+                        color: "var(--text)",
                       }}
                     />
                     <Area
                       type="monotone"
                       dataKey="amount"
                       name="Recebido"
-                      stroke="#ee743d"
+                      stroke="var(--chart-line)"
                       strokeWidth={3}
                       fill="url(#revenueFill)"
                     />
@@ -304,7 +306,7 @@ export default function Dashboard({
                   <Bar
                     dataKey="value"
                     name="Atletas"
-                    fill="#ff793f"
+                    fill="var(--chart-line)"
                     radius={[5, 5, 0, 0]}
                   />
                 </BarChart>
